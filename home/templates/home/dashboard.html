@@ -1,5 +1,25 @@
-{% extends "home/index.html" %}
-{% block content %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+    <head>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://kit.fontawesome.com/02b167d900.js"
+                crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        {% tailwind_css %}
+        <html lang="en" />
+        <title>Sacco.</title>
+    </head>
+    <body>
 <div class="flex">
 
 <main class="flex flex-col w-[300px] shadow-xl bg-white rounded-xl h-screen fixed">
@@ -37,30 +57,34 @@
 		</div>
 	</header>
 	<section class="flex px-4 flex-col mt-4 mb-4">
-		<a href="#" class="flex items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
+		<a href="{% url 'dashboard' %}" class="flex text-slate-600 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
 			<i class="fa-solid fa-house"></i>
 			Dashboard
-			<span class="flex items-center px-1 bg-red-100 rounded-md font-medium text-red-800 text-sm">16</span>
 		</a>
         
-		<a href="#" class="flex items-center mt-1 gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
+		<a href="{% url 'members' %}" class="flex text-slate-600  items-center mt-1 gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
             <i class="fa-solid fa-user-group"></i>
 			Members
 		</a>
-        <a href="#" class="flex mt-1 items-center gap-3 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
+        <a href="{% url 'notifications' %}" class="flex text-slate-600  mt-1 items-center gap-3 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
 			<i class="fa-solid fa-bell"></i>
 			Notifications
 		</a>
-        <a href="#" class="flex mt-1 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
+        <a href="{% url 'dashboard' %}" class="flex text-slate-600  mt-1 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
             <i class="fa-solid fa-comments"></i>
 			Chat
 		</a>
-		<a href="#" class="flex mt-1 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
+		<a href="#" class="flex text-slate-600  mt-1 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
 			<i class="fa-solid fa-chart-line"></i>
 			Perfomance
 		</a>
-        <a href="#" class="flex mt-1 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
-			<i class="fa-solid fa-chart-line"></i>
+		<a href="{% url 'profile' %}" class="flex text-slate-600  mt-1 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
+			<i class="fa-solid fa-user"></i>
+			Profile
+		</a>
+
+        <a href="#" class="flex mt-1 text-slate-600 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
+			<i class="fa-solid fa-right-from-bracket"></i>
 			Logout
 		</a>
 	</section>
@@ -70,8 +94,8 @@
 </div>
 
 </div>
-
-
-
-
-{% endblock %}
+<style>
+	
+</style>
+</body>
+</html>

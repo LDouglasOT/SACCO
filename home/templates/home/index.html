@@ -1,7 +1,7 @@
 {% load static tailwind_tags %}
 
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="cupcake">
     <head>
         <meta name="viewport"
               content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -24,7 +24,7 @@
         <nav class="px-20 py-5 bg-white w-full flex items-center justify-between">
             <div class="flex items-start items-start px-10"><h3 class="text-orange-500 font-bold text-5xl">sac</h3><h3 class="text-black font-bold text-5xl">co.ug</h3></div>
             <div class="flex items-start items-start">
-                <button class="btn btn-ghost mx-3 bg-gray-300">Login</button>
+                <a href="{% url 'login' %}" class="btn btn-ghost mx-3 bg-gray-300">Login</a>
                 <button class="btn btn-active btn-neutral text-white">Join us now</button>
             </div>
         </nav>

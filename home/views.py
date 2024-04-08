@@ -21,12 +21,17 @@ from django.utils import timezone
 from django.http import HttpResponse
 
 # Create your views here.
-def Home(request):
-    
-    return render(request,"home/Home.html",{"footer":True,"header":True})
-
-def dashboard(request):
+def Members(request):
     return render(request,"home/dashview.html",{"footer":False,"header":False})
 
+def dashboard(request):
+    return render(request,"home/homepage.html",{"footer":False,"header":False})
+
 def homepage(request):
-    return render(request,"home/homepage.html")
+    return render(request,"home/Home.html",{"footer":True,"header":True})
+
+def Profile(request):
+    return render(request,"home/Profile.html")
+
+def notifications(request):
+    return render(request,"home/notifications.html")

@@ -23,8 +23,11 @@ from home.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
-    path('',Home),
-    path('login/',Login),
-    path('dashboard/',dashboard),
-     path('home/',homepage)
+    path('',homepage,name="index"),
+    path('dashboard/',dashboard,name="dashboard"),
+    path('login/',Login,name="login"),
+    path('home/',homepage,name="home"),
+    path('/members',Members,name="members"),
+    path('profile/',Profile,name="profile"),
+    path('notifications/',notifications,name="notifications")
 ]

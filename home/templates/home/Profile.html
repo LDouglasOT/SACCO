@@ -1,0 +1,99 @@
+{% extends "home/dashboard.html" %}
+{% block dashboard %}
+<div class="w-full flex flex-col items-center ml-auto p-5 justify-center">
+    <div class="stats mt-5 py-5 border-none ml-20 w-9/12 bg-white flex flex-col text-primary-content">
+        <div class="flex items-center flex-row justify-between">
+            <h4 class="text-xl font-bold text-slate-500">Welcome Back Douglas!</h4>
+            <a  className="flex bg-black rounded-xl text-white">
+                Edit Profile
+            </a>
+        </div>
+        <div class="flex w-full items-center justify-center flex-col">
+            <img class="rounded-full h-24 m-3 mx-auto w-24"  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <h4>Janet Joe</h4>
+            <div class="flex items-center justify-center">
+                <h3 class="m-7"><i class="fa-solid fa-briefcase text-orange-500 mx-1"></i>Farmer</h3>
+                <h3 class="m-7"><i class="fa-solid fa-location-dot text-orange-500 mx-1"></i>Wakiso</h3>
+                <h3 class="m-7"><div class="badge bg-orange-500 text-white"><i class="fa-solid text-white fa-certificate mx-1"></i>verified</div></h3>
+            </div>
+        </div>
+      </div>
+    <div class="stats mt-5 ml-20 w-9/12 bg-orange-400 text-primary-content">
+        <div class="stat">
+          <div class="stat-title text-white">SACCO Balance</div>
+          <div class="stat-value">UGX 89,400</div>
+          <div class="stat-actions">
+            <button class="btn btn-sm btn-success">Add funds</button>
+          </div>
+        </div>
+        
+        <div class="stat">
+          <div class="stat-title text-white">Your Current Balance</div>
+          <div class="stat-value">UGX 89,400</div>
+          <div class="stat-actions">
+            <button class="btn btn-sm">Withdrawal</button> 
+            <button class="btn btn-sm">deposit</button>
+          </div>
+        </div>
+      </div>
+      <div class="stats mt-5 ml-20 flex items-start justify-start flex-col w-9/12 bg-white text-primary-content">
+    <br>
+    <h3 class="font-bold text-xl" >Recent Transactions</h3>
+    <div class="w-full">
+        <div class="overflow-x-auto">
+
+            <table class="table">
+            
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Transaction Type</th>
+                  <th>Acount</th>
+                  <th>Amount(in UGX)</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+           
+                <tr>
+                  <th>1</th>
+                  <td>Withdraw</td>
+                  <td>SACCO</td>
+                  <td>4,000,000</td>
+                  <td>Balaza, 8 Apuli 2024</td>
+                  <td><span>Pending</span></td>v
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <td>Withdraw</td>
+                    <td>SACCO</td>
+                    <td>4,000,000</td>
+                    <td>Balaza, 8 Apuli 2024</td>
+                    <td><span>Pending</span></td>
+                  </tr>
+                  <tr>
+                    <th>3</th>
+                    <td>Withdraw</td>
+                    <td>SACCO</td>
+                    <td>4,000,000</td>
+                    <td>Balaza, 8 Apuli 2024</td>
+                    <td> <span>Failed</span></td>
+                  </tr>
+                  <tr>
+                    <th>4</th>
+                    <td>Withdraw</td>
+                    <td>SACCO</td>
+                    <td>4,000,000</td>
+                    <td>Balaza, 8 Apuli 2024</td>
+                    <td><span>Pending</span></td>
+                  </tr>
+           
+          
+              </tbody>
+            </table>
+          </div>
+    </div>
+      </div>
+</div>
+{% endblock %}
