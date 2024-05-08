@@ -1,0 +1,178 @@
+{% extends "home/dashboard.html" %}
+{% block dashboard %}
+<div class="h-screen ">
+    <form method="post" class="flex flex-col items-center justify-center px-10 bg-slate-800">
+        {% csrf_token %}
+        <h1 class="font-bold text-white text-xl my-10">New User Details</h1>
+        <div class="flex flex-wrap bg-gray-800">
+            <p>
+                <label for="id_firstname">First Name:</label>
+                <input type="text" name="firstname" id="id_firstname" placeholder="Enter First Name" required>
+            </p>
+            <p>
+                <label for="id_lastname">Last Name:</label>
+                <input type="text" name="lastname" id="id_lastname" placeholder="Enter Last Name" required>
+            </p>
+            <p>
+                <label for="id_location">Location:</label>
+                <input type="text" name="location" id="id_location" placeholder="Enter Location" required>
+            </p>
+            <p>
+                <label for="id_phoneNumber">Phone Number:</label>
+                <input type="text" name="phoneNumber" id="id_phoneNumber" placeholder="Enter Phone Number" required>
+            </p>
+            <p>
+                <label for="id_profilepic">Profile Picture:</label>
+                <input type="file" name="profilepic" id="id_profilepic" accept="image/*" required>
+            </p>
+            <p>
+                <label for="id_email">Email:</label>
+                <input type="email" name="email" id="id_email" placeholder="Enter Email">
+            </p>
+            <p>
+                <label for="id_password">Password:</label>
+                <input type="password" name="password" id="id_password" placeholder="Enter Password" required>
+            </p>
+            <p>
+                <label for="id_membershipNumber">Membership Number:</label>
+                <input type="text" name="membershipNumber" id="id_membershipNumber" placeholder="Enter Membership Number">
+            </p>
+            <p>
+                <label for="id_membershipType">Membership Type:</label>
+                <input type="text" name="membershipType" id="id_membershipType" placeholder="Enter Membership Type">
+            </p>
+            <p>
+                <label for="id_HomeAddress">Home Address:</label>
+                <input type="text" name="HomeAddress" id="id_HomeAddress" placeholder="Enter Home Address">
+            </p>
+            <p>
+                <label for="id_dateofbirth">Date of Birth:</label>
+                <input type="date" min="2010-01-01 name="birthday" id="id_birthday" required>
+            </p>
+            <p>
+                <label for="id_nationality">Nationality:</label>
+                <input type="text" name="nationality" id="id_nationality" placeholder="Enter Nationality">
+            </p>
+            <p>
+                <label for="id_nationalId">National ID:</label>
+                <input type="text" name="nationalId" id="id_nationalId" placeholder="Enter National ID">
+            </p>
+            <p>
+                <label for="id_placeofwork">Place of Work:</label>
+                <input type="text" name="placeofwork" id="id_placeofwork" placeholder="Enter Place of Work">
+            </p>
+            <p>
+                <label for="id_natureofwork">Nature of Work:</label>
+                <input type="text" name="natureofwork" id="id_natureofwork" placeholder="Enter Nature of Work">
+            </p>
+            <p>
+                <label for="id_gender">Account Type:</label>
+                <select name="accountType" id="id_gender" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Savings">Male</option>
+                    <option value="Checking">Female</option>
+                </select>
+            </p>
+            <p>
+                <label for="id_MaritalStatus">Account Type:</label>
+                <select name="accountType" id="id_MaritalStatus" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Savings">Single</option>
+                    <option value="Checking">Married</option>
+                    <option value="Checking">Prefer not to say</option>
+                </select>
+            </p>
+            <p>
+                <label for="id_MaritalStatus">Marital Status:</label>
+                <input type="text" name="MaritalStatus" id="id_MaritalStatus" placeholder="Enter Marital Status">
+            </p>
+            <p>
+                <label for="id_nextofkin">Next of Kin:</label>
+                <input type="text" name="nextofkin" id="id_nextofkin" placeholder="Enter Next of Kin">
+            </p>
+            <p>
+                <label for="id_nextofkinphone">Next of Kin Phone:</label>
+                <input type="text" name="nextofkinphone" id="id_nextofkinphone" placeholder="Enter Next of Kin Phone">
+            </p>
+            <p>
+                <label for="id_nextofkinaddress">Next of Kin Address:</label>
+                <input type="text" name="nextofkinaddress" id="id_nextofkinaddress" placeholder="Enter Next of Kin Address">
+            </p>
+        </div>
+        <h1 class="font-bold text-white text-xl my-10">New User Account Details</h1>
+        <div class="flex flex-wrap bg-gray-800">
+            <p>
+                <label for="id_accountBalance">Account Balance:</label>
+                <input type="number" name="accountBalance" id="id_accountBalance" placeholder="Enter Account Balance" required>
+            </p>
+            <p>
+                <label for="id_accountType">Account Type:</label>
+                <select name="accountType" id="id_accountType" required>
+                    <option value="" disabled selected>Select Account Type</option>
+                    <option value="Savings">Savings</option>
+                    <option value="Checking">Checking</option>
+                    <option value="Investment">Investment</option>
+                    <!-- Add more account type options as needed -->
+                </select>
+            </p>
+            <p>
+                <label for="id_accountOwner">Account Owner:</label>
+                <input type="text" name="accountOwner" id="id_accountOwner" placeholder="Enter Account Owner" required>
+            </p>
+            <p>
+                <label for="id_interest">Interest:</label>
+                <input type="number" name="interest" id="id_interest" placeholder="Enter Interest" required>
+            </p>
+            <p>
+                <label for="id_nextofkinAccount">Next of Kin (Account):</label>
+                <input type="text" name="nextofkinAccount" id="id_nextofkinAccount" placeholder="Enter Next of Kin (Account)" required>
+            </p>
+            <p>
+                <label for="id_approvedBy">Approved By:</label>
+                <input type="text" name="approvedBy" id="id_approvedBy" placeholder="Enter Approved By" required>
+            </p>
+            <p>
+                <label for="id_isActive">Active:</label>
+                <input type="checkbox" name="isActive" id="id_isActive" checked>
+            </p>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="w-9/12 bg-slate-600 rounded-lg">
+            <button type="submit" class="text-white px-5 py-3 w-full font-bold bg-slate-600">Submit</button>
+        </div>
+    
+        <br>
+        <br>
+    </form>
+</div>
+<style>
+    p {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        padding: 10px;
+    }
+    label {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        padding: 10px;
+        color: white;
+    }
+    input, select {
+        width: 70%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid black;
+    }
+    /* button{
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid black;
+    } */
+</style>
+{% endblock %}

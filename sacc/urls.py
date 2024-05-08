@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path,include
 from users.views import *
 from home.views import *
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -25,9 +26,18 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('',homepage,name="index"),
     path('dashboard/',dashboard,name="dashboard"),
-    path('login/',Login,name="login"),
     path('home/',homepage,name="home"),
-    path('/members',Members,name="members"),
+    path('members',Members,name="members"),
     path('profile/',Profile,name="profile"),
-    path('notifications/',notifications,name="notifications")
+    path('notifications/',notifications,name="notifications"),
+    path('loans/',loans,name="loans"),
+    path('transactions/',Transactions,name="transactions"),
+    path('createuser/',CreateUser,name="createuser"),
+    path('login/', custom_login, name='login'),
+    path('logout/', custom_logout, name='logout'),
+    path('register/', custom_registration, name='register'),
+    path('member/<uuid:id>/', memberinfo, name="memberinfo"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

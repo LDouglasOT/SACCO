@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home',
     'tailwind',
     'theme',
+    'django.contrib.humanize',
     'django_browser_reload'
 ]
 
@@ -131,3 +132,6 @@ STATIC_URL = 'static/'
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 TAILWIND_APP_NAME = 'theme'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'home.CustomUser'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'

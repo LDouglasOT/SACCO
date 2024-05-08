@@ -1,4 +1,5 @@
 {% load static tailwind_tags %}
+{% load humanize %}
 
 <!DOCTYPE html>
 <html lang="en" data-theme="cupcake">
@@ -12,90 +13,85 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://kit.fontawesome.com/02b167d900.js"
                 crossorigin="anonymous"></script>
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <a href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
         <script src="https://cdn.tailwindcss.com"></script>
+		<link
+		href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css"
+		rel="stylesheet"
+		type="text/css"
+	  />
+	  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
 
         {% tailwind_css %}
-        <html lang="en" />
+        <html lang="en">
         <title>Sacco.</title>
     </head>
-    <body>
-<div class="flex">
+    <body class="bg-slate-800">
+<div class="flex bg-slate-800">
+	<div style="width: 200px;background:#1E232A;" class='h-screen fixed'>
+	<div class='flex items-center py-3 px-2'>
+	<br />
+	<br />
+	  <h2 class='text-white text-xl mx-2 my-5'>
+		Odyssey Sacco
+	  </h2>
+	  <br />
+	   <hr />
+	  <br />
+	  <br />
+	</div>
+	  <ul class='mx-5'>
+		<li class='my-1'>
+		<a href="{% url 'dashboard' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-chart-line mx-3"></i> Dashboard</h2></a>
+		</li>
+		<br />
+		{% if request.user.is_staff %}
+		<li class='my-1'>
+		  <a href="{% url 'members' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-users-line mx-3"></i>Members</h2></a>
+		</li>
+		<br />
+		{% endif %}
+		<li class='my-1'>
+		  <a href="{% url 'loans' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-plane-arrival mx-3"></i>Loans</h2></a>
+		</li>
+		<br />
+		<li class='my-1'>
+		  <a href="{% url 'notifications' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-bell mx-3"></i>Notification</h2></a>
+		</li>
+		<br />
+		<li class='my-1'>
+		  <a href="{% url 'transactions' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-money-bill-transfer mx-3"></i>Transactions</h2></a>
+		</li>
+		
+		  <br />
+		<li class='my-1'>
+		  <a href="{% url 'profile' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-user mx-3"></i>Profile</h2></a>
+		</li>
+		<br />
+		<li class='my-1'>
+		  <a href="{% url 'logout' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-right-from-bracket mx-3"></i>logout</h2></a>
+		</li>
+		<br />
+	  </ul>
+	<div class='flex items-center bg-slate-700 py-3 rounded-xl px-2 mx-2 b-0'>
+	  
+	  <div class="avatar online">
+		<div class="w-16 rounded-full">   
+	   <img class="rounded-full" src="https://avatars.githubusercontent.com/u/89447046?v=4" />
+	  </div>
+	  </div>
+	   <div class='text-white mx-2'>{{request.user.username}}</div>
+	  </div>
+	</div>
 
-<main class="flex flex-col w-[300px] shadow-xl bg-white rounded-xl h-screen fixed">
-	<header class="flex flex-col p-4 gap-4">
-		<div class="flex flex-1 justify-between">
-			<div class="flex items-center gap-3">
-				<span class="rounded-full aspect-square bg-[#41bd6d] w-10 h-10 text-white	font-medium text-md flex items-center justify-center">C</span>
-				<div class="flex flex-col gap-0.5">
-					<div class="flex gap-2">
-						<span class="font-medium">Sacolade</span>
-						<span class="flex items-center py-0 px-1 bg-[#ece0f7] rounded-md font-medium text-[#593597] text-sm">admin</span>
-					</div>
-					<span class="text-slate-400	text-sm">20 Members</span>
-				</div>
-			</div>
-			<div class="flex gap-2">
-				<button class="inline-flex p-1 flex justify-center items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-					</svg>
-				</button>
-				<button class="inline-flex p-1 flex justify-center items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-					</svg>
 
-				</button>
-			</div>
-		</div>
-
-		<div class="flex flex-1 gap-3">
-			<button class="inline-flex shadow-sm bg-white w-full justify-center rounded-xl text-sm font-semibold py-2 px-3 text-slate-900 ring-1 ring-slate-900/10 hover:ring-slate-900/20 items-center gap-2">
-				<svg class="text-gray-600 w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M12 4V20M4 12H20" stroke="currentcolor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-				</svg>
-				Add new</button>
-		</div>
-	</header>
-	<section class="flex px-4 flex-col mt-4 mb-4">
-		<a href="{% url 'dashboard' %}" class="flex text-slate-600 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
-			<i class="fa-solid fa-house"></i>
-			Dashboard
-		</a>
-        
-		<a href="{% url 'members' %}" class="flex text-slate-600  items-center mt-1 gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
-            <i class="fa-solid fa-user-group"></i>
-			Members
-		</a>
-        <a href="{% url 'notifications' %}" class="flex text-slate-600  mt-1 items-center gap-3 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
-			<i class="fa-solid fa-bell"></i>
-			Notifications
-		</a>
-        <a href="{% url 'dashboard' %}" class="flex text-slate-600  mt-1 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
-            <i class="fa-solid fa-comments"></i>
-			Chat
-		</a>
-		<a href="#" class="flex text-slate-600  mt-1 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
-			<i class="fa-solid fa-chart-line"></i>
-			Perfomance
-		</a>
-		<a href="{% url 'profile' %}" class="flex text-slate-600  mt-1 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
-			<i class="fa-solid fa-user"></i>
-			Profile
-		</a>
-
-        <a href="#" class="flex mt-1 text-slate-600 items-center gap-2 hover:bg-[#f5f5f5] p-2 px-3 rounded-xl text-xl">
-			<i class="fa-solid fa-right-from-bracket"></i>
-			Logout
-		</a>
-	</section>
-</main>
-<div class="bg-gray-300 bg-white border-none h-screen w-10/12 ml-auto">
-    {% block dashboard %}{% endblock %}
-</div>
-
-</div>
-<style>
+	</div>
 	
-</style>
+	<div class='bg-slate-200 w-9/12' style="margin-left: 10%; width: 90%;">
+			{% block dashboard %}{% endblock %}
+	</div>
+  </div>
+
 </body>
 </html>

@@ -1,0 +1,93 @@
+{% extends "home/dashboard.html" %}
+{% block dashboard %}
+
+<div class="bg-slate-800 w-full h-screen px-30 w-9/12">
+  
+    <div class='flex items-center justify-between px-16 bg-slate-800 rounded'>
+      <div>
+        <h3 class='text-3xl font-bold text-slate-100'>Douglas' Loans Section</h3>
+        <h3 class='flex items-center my-1 text-slate-100'><IoIosCall /> 256780621421</h3>
+      </div>
+      <div>
+        <div class='flex items-center bg-slate-800 py-3 rounded-xl px-2 mx-2 mb-auto'>
+        <div class="avatar online">
+        <div class="w-16 rounded-full">   
+        <img class="rounded-full" src="https://avatars.githubusercontent.com/u/89447046?v=4" />
+        </div>
+        </div>
+        <div class='text-white mx-2'>Douglas <br /> Luzinda</div>
+        </div>
+      </div>
+    </div>
+
+  <div class="p-10 flex w-full items-center bg-slate-800 justify-between">
+      <h3 class="text-lg font-bold text-white">4 Loan Applications</h3>
+
+      <label class="input w-7/12 input-bordered flex items-center gap-2">
+        <input type="text" class="grow" placeholder="Search" />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" /></svg>
+      </label>
+      
+      <div class="text-white"><button class="btn bg-white text-white ">New Loan application</button></div>
+  </div>
+
+
+  <div class="overflow-x-auto w-full bg-slate-800 px-10">
+      <table class="table w-full bg-slate-700">
+
+        <thead class="bg-slate-700">
+          <tr>
+            <th>
+            </th>
+            <th>Applicant Name</th>
+            <th>Application Details</th>
+            <th>Expected Fee</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for loan in loans %}
+          <tr>
+            <th>
+              <label>
+                <input type="checkbox" class="checkbox" />
+              </label>
+            </th>
+            <td>
+              <div class="flex items-center gap-3">
+                <div class="avatar">
+                  <div class="mask mask-squircle w-12 h-12">
+                    <img src="https://avatars.githubusercontent.com/u/89447046?v=4" alt="Avatar Tailwind CSS Component" />
+                  </div>
+                </div>
+                <div>
+                  <div class="font-bold">Douglas Luzinda</div>
+                  <div class="text-sm opacity-50"><i class="fa-solid fa-location-dot"></i> Kagoma</div>
+                </div>
+              </div>
+            </td>
+            <td>
+                UGX 500,000
+                <br>
+              <span class="badge badge-ghost badge-sm p-3"></i><i class="fa-solid fa-coins mx-1"></i>Fixed saving</span>
+     
+              <span class="badge badge-error badge-sm p-3 bg-red-400"><i class="fa-solid fa-signal mx-1"></i> Pending Approval</span>
+              <span class="badge badge-ghost badge-sm p-3"><i class="fa-solid fa-briefcase mx-1"></i>5% interest</span>
+            </td>
+            <td>UGX 525,000</td>
+            <th>
+            <a class="btn btn-sm btn-warning text-white"><i class="fa-solid fa-eye mx-2"></i>view user profile</a>
+  
+           
+            <button class="btn btn-sm btn-success text-white"><i class="fa-solid fa-check-double mx-2"></i>Approve</button>
+            <button class="btn btn-sm btn-error text-white"><i class="fa-solid fa-eye mx-2"></i>Reject</button>
+           
+            </th>
+          </tr>
+          {% endfor %}
+        </tbody>        
+      </table>
+    </div>
+</div>
+
+{% endblock %}
