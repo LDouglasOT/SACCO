@@ -37,6 +37,7 @@ urlpatterns = [
     path('logout/', custom_logout, name='logout'),
     path('register/', custom_registration, name='register'),
     path('member/<uuid:id>/', memberinfo, name="memberinfo"),
+    path('application/', LoanApplication, name="loanapplication"),
 ]
 
 if settings.DEBUG:

@@ -33,6 +33,8 @@ def dashboard(request):
     loan = Loan.objects.filter(loanOwner=request.user).count()
     loanpayment = LoanPayment.objects.filter(loanPaymentOwner=request.user).count()
     transaction = Transaction.objects.filter(transactionOwner=request.user).count()
+    loantotal = Loan.objects.filter(loanOwner=request.user).aggregate(Sum('loanAmount'))
+    
     context = {
     "account":account,
     "loan":loan,
@@ -45,7 +47,7 @@ def dashboard(request):
     return render(request,"home/maindashboard.html",{"footer":False,"header":False,"account":account,
     "loan":loan,
     "loanpayment":loanpayment,
-    "transaction":transaction,"user":User})
+    "transaction":transaction,"user":User,"loantotal":loantotal})
 
 def homepage(request):
     return render(request,"home/Home.html",{"footer":True,"header":True})
@@ -62,7 +64,8 @@ def notifications(request):
 def loans(request):
     if request.user.is_staff:
         loans = Loan.objects.all()
-        return render(request,"home/loans.html",{"loans":loans})
+        loancount = loans.count()
+        return render(request,"home/loans.html",{"loans":loans,'loancount':loancount})
 
 def Transactions(request):
     transactions = Transaction.objects.filter(transactionOwner=request.user)   
@@ -98,3 +101,16 @@ def suspenduser(request,id):
     user.isActive = False
     user.save()
     return redirect("members")
+
+def LoanApplication(request):
+    if request.method == "POST":
+        loan = Loan()
+        loan.loanOwner = request.user
+        loan.loanAmount = request.POST.get("loanAmount")
+        loan.loanInterest = request.POST.get("loanInterest")
+        loan.loanDuration = request.POST.get("loanDuration")
+        loan.loanStatus = "Pending"
+        loan.save()
+        return redirect("dashboard")
+    else:
+        return render(request,"home/LoanApplication.html")

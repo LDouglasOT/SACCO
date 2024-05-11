@@ -8,6 +8,7 @@ class Account(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     accountNumber = models.CharField(unique=True, max_length=255, blank=True)
     accountBalance = models.FloatField()
+    totalsavings = models.IntegerField(default=0)
     accountType = models.CharField(max_length=255)
     accountName = models.CharField(max_length=255)
     accountOwner = models.ForeignKey('CustomUser', related_name='accounts', on_delete=models.CASCADE)

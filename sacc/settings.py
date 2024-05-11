@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'home',
     'tailwind',
     'theme',
+    'django_tables2',
     'django.contrib.humanize',
     'django_browser_reload'
 ]
