@@ -19,6 +19,9 @@ from django.urls import path,include
 from users.views import *
 from home.views import *
 from django.conf.urls.static import static
+from django.conf import settings
+from home.members import *
+from home.Loans import *
 
 
 urlpatterns = [
@@ -27,17 +30,29 @@ urlpatterns = [
     path('',homepage,name="index"),
     path('dashboard/',dashboard,name="dashboard"),
     path('home/',homepage,name="home"),
-    path('members',Members,name="members"),
     path('profile/',Profile,name="profile"),
     path('notifications/',notifications,name="notifications"),
-    path('loans/',loans,name="loans"),
+
     path('transactions/',Transactions,name="transactions"),
     path('createuser/',CreateUser,name="createuser"),
     path('login/', custom_login, name='login'),
     path('logout/', custom_logout, name='logout'),
     path('register/', custom_registration, name='register'),
+    #Members inforamation, suspension, active ones and activation
+    path('members/active/',Members,name="members"),
     path('member/<uuid:id>/', memberinfo, name="memberinfo"),
+    path('membersuspend/<uuid:id>/', suspendmember, name="suspendmember"),
+    path('members/pendingmembers/', PedningMembers, name="pendingmembers"),
+    path('memebers/suspendedmembers/', suspendedMembers, name="suspendedmembers"),
+    path('reactivatemember/<uuid:id>/', reactivatemember, name="reactivatemember"),
+    #This is where the loan applications,activation,deletion,dues,views are done
     path('application/', LoanApplication, name="loanapplication"),
+    path('loans/activeloans',ActiveLoans,name="loans"),
+    path('loans/declined',declinedLoans,name="declinedLoans"),
+    path('loans/disburse',disbursement,name="disburse"),
+    path('loans/completed',completedLoans,name="completedLoans"),
+    path('loans/pending',PendingLoans,name="pendingLoans"),
+
 ]
 
 if settings.DEBUG:

@@ -62,7 +62,7 @@
             <div class="stat-value text-slate-100">5/10</div>
           </div>
         </div>
-      
+        {% if request.user.is_staff %}
         <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
           <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
           <div class="stat place-items-start">
@@ -70,6 +70,7 @@
             <div class="stat-value text-slate-100">5/10</div>
           </div>
         </div>
+       
       
         <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
           <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
@@ -134,7 +135,7 @@
             <div class="stat-value text-slate-100">5/10</div>
           </div>
         </div>
-
+        {% endif %}
       </div>
       
       <div class="fixed flex flex-col hidden items-center justify-center bg-slate-700 w-full h-screen top-0 z-10 payment-div">

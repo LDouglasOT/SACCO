@@ -42,8 +42,9 @@
             <th>Name</th>
             <th>Details</th>
             <th>Earned</th>
-            <th></th>
-          </tr>
+            <th>Loans</th>
+            <th>Actions</th>
+           </tr>
         </thead>
         <tbody>
           {% for user in users %}
@@ -74,9 +75,10 @@
               <span class="badge badge-ghost badge-sm p-3"><i class="fa-solid fa-briefcase mx-1"></i>{{user.natureofwork}}</span>
             </td>
             <td>UGX {{user.account.earned}}</td>
+            <td>UGX {{user.account.earned}}</td>
             <th>
               <a href="{% url 'memberinfo' user.id %}" class="btn btn-sm btn-accent text-white"><i class="fa-solid fa-eye mx-2"></i>View</a>
-              <button class="btn btn-sm btn-error text-white"><i class="fa-solid fa-trash-can-arrow-up mx-2"></i>Suspend</button>
+              <a href="{% url 'suspendmember' user.id %}" class="btn btn-sm btn-error text-white"><i class="fa-solid fa-trash-can-arrow-up mx-2"></i>Suspend</a>
             </th>
           </tr>
           {% endfor %}

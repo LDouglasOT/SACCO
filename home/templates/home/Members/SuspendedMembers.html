@@ -1,0 +1,92 @@
+{% extends "home/dashboard.html" %}
+{% block dashboard %}
+
+<div class="bg-slate-800 w-full h-screen px-30 w-9/12">
+  
+    <div class='flex items-center justify-between px-16 bg-slate-800 rounded'>
+      <div>
+        <h3 class='text-3xl font-bold text-slate-100'>Douglas' Dashboard</h3>
+        <h3 class='flex items-center my-1 text-slate-100'><IoIosCall /> 256780621421</h3>
+      </div>
+      <div>
+        <div class='flex items-center bg-slate-800 py-3 rounded-xl px-2 mx-2 mb-auto'>
+        <div class="avatar online">
+        <div class="w-16 rounded-full">   
+        <img class="rounded-full" src="https://avatars.githubusercontent.com/u/89447046?v=4" />
+        </div>
+        </div>
+        <div class='text-white mx-2'>Douglas <br /> Luzinda</div>
+        </div>
+      </div>
+    </div>
+
+  <div class="p-10 flex w-full items-center bg-slate-800 justify-between">
+      <h3 class="text-lg font-bold text-white">{{usercount}} Suspended Sacco Members</h3>
+
+      <label class="input w-7/12 input-bordered flex items-center gap-2">
+        <input type="text" class="grow" placeholder="Search" />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" /></svg>
+      </label>
+      
+      <div class="text-white"><a href="{% url 'createuser' %}" class="btn bg-white text-white ">New Member</a></div>
+  </div>
+
+
+  <div class="overflow-x-auto w-full bg-slate-800 px-10">
+      <table class="table w-full bg-slate-700">
+
+        <thead class="bg-slate-700">
+          <tr>
+            <th>
+            </th>
+            <th>Name</th>
+            <th>Details</th>
+            <th>Earned</th>
+            <th>Loans</th>
+            <th>Status</th>
+            <th>Actions</th>
+           </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <th>
+              <label>
+                <input type="checkbox" class="checkbox" />
+              </label>
+            </th>
+            <td>
+              <div class="flex items-center gap-3">
+                <div class="avatar">
+                  <div class="mask mask-squircle w-12 h-12">
+                    <img src="https://avatars.githubusercontent.com/u/89447046?v=4" alt="Avatar Tailwind CSS Component" />
+                  </div>
+                </div>
+                <div>
+                  <div class="font-bold">{{user.firstname}} {{user.lastname}}</div>
+                  <div class="text-sm opacity-50"><i class="fa-solid fa-location-dot"></i> {{user.location}}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              UGX 122,000 ( <span class="badge badge-ghost badge-sm p-3">principle</span> )
+              <br/>
+              <span class="badge badge-ghost badge-sm p-3"></i><i class="fa-solid fa-coins mx-1"></i>{{user.account.accountType}}</span>
+              <span class="badge badge-ghost badge-sm p-3"><i class="fa-solid fa-baby-carriage mx-1"></i>12 yrs</span>
+              <span class="badge badge-ghost badge-sm p-3"><i class="fa-solid fa-briefcase mx-1"></i>{{user.natureofwork}}</span>
+            </td>
+            <td>UGX {{user.account.earned}}</td>
+            <td>UGX {{user.account.earned}}</td>
+            <td><span class="badge badge-error p-3">Suspended</span></td>
+            <th>
+              <a href="{% url 'memberinfo' user.id %}" class="btn btn-sm btn-accent text-white"><i class="fa-solid fa-eye mx-2"></i>View</a>
+              <a href="{% url 'reactivatemember' user.id %}" class="btn btn-sm btn-success text-white"><i class="fa-solid fa-check-double mx-2"></i>Re-Activate</a>
+            </th>
+          </tr>
+          {% endfor %}
+        </tbody>        
+      </table>
+    </div>
+</div>
+
+{% endblock %}

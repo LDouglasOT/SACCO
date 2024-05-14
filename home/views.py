@@ -22,10 +22,7 @@ from django.db.models import Count
 from django.utils import timezone
 from django.http import HttpResponse
 
-# Create your views here.
-def Members(request):
-    user = Users.objects.all()
-    return render(request,"home/Members.html",{"footer":False,"header":False,"users":user,'usercount':user.count()})
+
 
 def dashboard(request):
     account = Account.objects.get(accountOwner=request.user)
@@ -57,15 +54,16 @@ def Profile(request):
     account = Account.objects.get(accountOwner=request.user)
     return render(request,"home/Profile.html",{ "profile":profile,"account":account})
 
-def notifications(request):
-    notifications = Notifications.objects.filter(notificationOwner=request.user)
-    return render(request,"home/notifications.html",{"notifications":notifications})
-
-def loans(request):
+def notifications(request): 
     if request.user.is_staff:
-        loans = Loan.objects.all()
-        loancount = loans.count()
-        return render(request,"home/loans.html",{"loans":loans,'loancount':loancount})
+        notifications = Notifications.objects.all()
+        notificationscounter = notifications.count()
+        return render(request,"home/notifications.html",{"notifications":notifications,"notificationscounter":notificationscounter})
+    else:
+        notifications = Notifications.objects.filter(notificationOwner=request.user)
+        notificationscounter = notifications.count()
+        return render(request,"home/notifications.html",{"notifications":notifications,"notificationscounter":notificationscounter})
+
 
 def Transactions(request):
     transactions = Transaction.objects.filter(transactionOwner=request.user)   
@@ -102,15 +100,4 @@ def suspenduser(request,id):
     user.save()
     return redirect("members")
 
-def LoanApplication(request):
-    if request.method == "POST":
-        loan = Loan()
-        loan.loanOwner = request.user
-        loan.loanAmount = request.POST.get("loanAmount")
-        loan.loanInterest = request.POST.get("loanInterest")
-        loan.loanDuration = request.POST.get("loanDuration")
-        loan.loanStatus = "Pending"
-        loan.save()
-        return redirect("dashboard")
-    else:
-        return render(request,"home/LoanApplication.html")
+

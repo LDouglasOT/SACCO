@@ -1,0 +1,151 @@
+{% extends "home/dashboard.html" %}
+{% block dashboard %}
+
+<div class="bg-slate-800 w-full h-screen px-30 w-9/12">
+  
+    <div class='flex items-center justify-between px-16 bg-slate-800 rounded'>
+      <div>
+        <h3 class='text-3xl font-bold text-slate-100'>{{request.user.username}}' Loans Section</h3>
+        <h3 class='flex items-center my-1 text-slate-100'><IoIosCall /> 256780621421</h3>
+      </div>
+      <div>
+        <div class='flex items-center bg-slate-800 py-3 rounded-xl px-2 mx-2 mb-auto'>
+        <div class="avatar online">
+        <div class="w-16 rounded-full">   
+        <img class="rounded-full" src="https://avatars.githubusercontent.com/u/89447046?v=4" />
+        </div>
+        </div>
+        <div class='text-white mx-2'>Douglas <br /> Luzinda</div>
+        </div>
+      </div>
+    </div>
+
+  <div class="p-10 flex w-full items-center bg-slate-800 justify-between">
+      <h3 class="text-lg font-bold text-white">4 Loan Applications</h3>
+
+      <label class="input w-7/12 input-bordered flex items-center gap-2">
+        <input type="text" class="grow" placeholder="Search" />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" /></svg>
+      </label>
+      
+      <div class="text-white"><a href="{% url 'loanapplication' %}" class="btn bg-white text-white ">New Loan application</a></div>
+  </div>
+
+<div class="flex items-center px-16 justify-between">
+  <div></div>
+  <div></div>
+<div class="flex items-center justify-around">
+
+  <label class="form-control w-full max-w-xs">
+    <select class="select select-bordered">
+      <option disabled selected>Loans status</option>
+      <option>Star Wars</option>
+      <option>Harry Potter</option>
+      <option>Lord of the Rings</option>
+      <option>Planet of the Apes</option>
+      <option>Star Trek</option>
+    </select>
+  </label>
+
+  <div date-rangepicker class="flex items-center">
+  <div class="relative">
+    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+        </svg>
+    </div>
+    <input name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date start">
+  </div>
+  <span class="mx-4 text-gray-500">to</span>
+  <div class="relative">
+    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+        </svg>
+    </div>
+    <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date end">
+</div>
+</div>
+
+<button class="bg-slate-700 h-10 px-5 mx-3 rounded-lg text-white flex items-center justify-center">
+  <i class="fa-solid fa-filter mx-3"></i>
+  Filter
+</button>
+
+  </div>
+
+</div>
+<br>
+
+  <div class="overflow-x-auto w-full bg-slate-800 px-10">
+      <table class="table w-full bg-slate-700">
+
+        <thead class="bg-slate-700">
+          <tr>
+            <th>
+            </th>
+            <th>Applicant Name</th>
+            <th>Application Details</th>
+            <th>Expected Fee</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for loan in loans %}
+          <tr>
+            <th>
+              <label>
+                <input type="checkbox" class="checkbox" />
+              </label>
+            </th>
+            <td>
+              <div class="flex items-center gap-3">
+                <div class="avatar">
+                  <div class="mask mask-squircle w-12 h-12">
+                    <img src="https://avatars.githubusercontent.com/u/89447046?v=4" alt="Avatar Tailwind CSS Component" />
+                  </div>
+                </div>
+                <div>
+                  <div class="font-bold">Douglas Luzinda</div>
+                  <div class="text-sm opacity-50"><i class="fa-solid fa-location-dot"></i> Kagoma</div>
+                </div>
+              </div>
+            </td>
+            <td>
+                UGX 500,000
+                <br>
+              <span class="badge badge-ghost badge-sm p-3"></i><i class="fa-solid fa-coins mx-1"></i>Fixed saving</span>
+              {% if loan.loanStatus == "Pending" %}
+              <span class="badge badge-error badge-sm p-3 bg-red-400"><i class="fa-solid fa-signal mx-1"></i> Pending Approval</span>
+              {% endif %}
+              {% if loan.loanStatus == "Active" %}
+              <span class="badge badge-success badge-sm p-3 bg-green-400"><i class="fa-solid fa-signal mx-1"></i>Active</span>
+              {% endif %}
+              {% if loan.loanStatus == "Disburse" %}
+              <span class="badge badge-warning badge-sm p-3 bg-slate-400"><i class="fa-solid fa-signal mx-1"></i>awaiting Disbursal</span>
+              {% endif %}
+              <span class="badge badge-ghost badge-sm p-3"><i class="fa-solid fa-briefcase mx-1"></i>5% interest</span>
+              <span class="badge badge-ghost badge-sm p-3"><i class="fa-solid fa-briefcase mx-1"></i>Kagoma stage 34</span>
+            </td>
+            <td>UGX 525,000</td>
+            <th>
+            <a class="btn btn-sm btn-warning text-white"><i class="fa-solid fa-eye mx-2"></i>view user profile</a> 
+       
+            {% if loan.loanStatus == "Pending" %}
+            <button class="btn btn-sm btn-success text-white"><i class="fa-solid fa-check-double mx-2"></i>Approve</button>
+            <button class="btn btn-sm btn-error text-white"><i class="fa-solid fa-trash-can mx-2"></i></i>Reject</button>
+            {% endif %}
+            {% if loan.loanStatus == "Active" %}
+            <div>
+
+            </div>
+            {% endif %}
+            </th>
+          </tr>
+          {% endfor %}
+        </tbody>        
+      </table>
+    </div>
+</div>
+
+{% endblock %}

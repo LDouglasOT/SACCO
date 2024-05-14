@@ -108,7 +108,7 @@ class Users(models.Model):
     nextofkin = models.CharField(max_length=255)
     nextofkinphone = models.CharField(max_length=255)
     nextofkinaddress = models.CharField(max_length=255)
-
+    userstatus = models.CharField(max_length=255,default="active")
    
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
