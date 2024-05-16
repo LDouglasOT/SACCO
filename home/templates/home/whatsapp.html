@@ -1,0 +1,206 @@
+{% extends "home/dashboard.html" %}
+{% block dashboard %}
+    <div class="bg-slate-800 w-full h-screen px-30 w-9/12">
+        <div class="w-full flex flex-col items-center justify-center">
+            <h3 class="flex items-end text-green-400 text-3xl my-5">Whatsapp Bulk Messaging</h3>
+            <br>
+            <br>
+            <div class="flex items-center justify-center w-10/12">
+                <div class="border w-60 rounded theadmonkey h-80 mb-20 mx-8 px-8">
+                    <h3 class="my-5 cursor-pointer text-white"
+                        id="options"
+                        data-student="Names"
+                        data-fees="100000">Sacco Names</h3>
+                    <h3 class="my-5 cursor-pointer text-white"
+                        id="options"
+                        data-student="Parent"
+                        data-fees="Kaddu Edward">Full Names</h3>
+                    <h3 class="my-5 cursor-pointer text-white"
+                        id="options"
+                        data-student="fees"
+                        data-fees="800000">Account Balance</h3>
+                    <h3 class="my-5 cursor-pointer text-white"
+                        id="options"
+                        data-student="balance"
+                        data-fees="95000">Interest</h3>
+                    <h3 class="my-5 cursor-pointer text-white"
+                        id="options"
+                        data-student="percentage"
+                        data-fees="80000">Loan amount</h3>
+                    <h3 class="my-5 cursor-pointer text-white"
+                        id="options"
+                        data-student="total"
+                        data-fees="80000">Date</h3>
+                    <br>
+                </div>
+                <div class="w-full">
+                    <textarea class="w-full mt-10 h-40 rounded p-3" id="messageTextarea"></textarea>
+                    <div class="message-sender">
+                        <canvas class="loader" />
+                        <h3 class="text-slate-300">Preparing and sending messages, please wait</h3>
+                    </div>
+                    <div id="previewMessage"
+                         class="w-full bg-slate-200 h-20 rounded p-5 flex flex-wrap"></div>
+                    <input type="button"
+                           class="w-full theadmonkey text-white p-1 my-10 h-10 rounded"
+                           id="send-message"
+                           value="Send Message" />
+                </div>
+                <div class="w-60 rounded h-80 mb-20 px-8 flex flex-col">
+                    <div class="mb-4">
+                        <label class="block text-white text-sm font-bold mb-2" for="stream">Select Reason</label>
+                        <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="mainaccount"
+                                name="notice">
+                            <option value="0">Notice</option>
+                            <option value="2">Loan Defaulters</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-white text-sm font-bold mb-2" for="notice">Select Group</label>
+                        <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="stream"
+                                name="stream">
+                            <option value="0">Exceeded Fines</option>
+                            <option value="10">All Defaulters</option>
+                        </select>
+                    </div>
+                    <div class="percentage-place">
+                        <h3>Defaulters percentage</h3>
+                        <input type="number" placeholder="Percentage fees" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+                const sendsms = document.getElementById("send-message")
+                const loader = document.querySelector(".message-sender")
+                const prev = document.querySelector("#previewMessage")
+                const defaulters = document.querySelector('#mainaccount')
+                const inputElement = document.getElementById("messageTextarea")
+                const preview = document.getElementById("previewMessage")
+                
+                defaulters.addEventListener("change", function(value) {
+                    if (this.value == 2) {
+                        document.querySelector('.percentage-place').style.display = 'block'
+                    } else {
+                        document.querySelector('.percentage-place').style.display = 'none'
+                    }
+                })
+                console.log(sendsms)
+                sendsms.addEventListener("click", () => {
+                    preview.style.display = 'None'
+                    loader.style.display = 'flex'
+                    const message = document.getElementById("messageTextarea").value
+                    const group = document.querySelector('#mainaccount')?.value
+                    const percentage = document.getElementById("percentage")?.value
+                    const messageText = document.getElementById("stream")?.value
+                    $.ajax({
+                            url: '/send-messages/',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                message: message,
+                                group: group,
+                                percentage:percentage || 0,
+                                messageText:messageText
+                            }),
+                            success: function(response) {
+                                console.log("succes response")
+                                loader.style.display = 'none';
+                                success.style.display = 'none';
+                            },
+                            error: function(xhr) {
+                                loader.style.display = 'none';
+                                console.log('Error:', xhr.status, xhr.statusText);
+                            }
+                        })
+                })
+
+                inputElement.addEventListener("input", () => {
+                    let value = inputElement.value
+                    value = value.replace("[Sacco Names]", "KBT Sacco")
+                    value = value.replace("[Fullnames]", "Douglas Luzinda")
+                    value = value.replace("[Interest]", "1,000,000")
+                    value = value.replace("[Account Balance]", "300000")
+                    value = value.replace("[Loan amount]", "10%")
+                    value = value.replace("[Date]", "1,000,000")
+
+                    console.log(value)
+                    preview.innerHTML = value
+                })
+
+                const options = document.querySelectorAll("#options")
+                options.forEach(element => {
+                    element.addEventListener("click", () => {
+                        console.log(inputElement.value);
+                        const data = element.getAttribute("data-student")
+                        const fees = element.getAttribute("data-fees")
+                        if (data == "Names") {
+                            inputElement.value = inputElement.value + " " + "[Sacco Names]"
+                            preview.innerHTML = preview.innerHTML + " " + "Luzinda Douglas"
+                        } else if (data == "Parent") {
+                            inputElement.value = inputElement.value + " " + "[Fullnames]"
+                            preview.innerHTML = preview.innerHTML + " " + "Kaddu Edward"
+                        } else if (data == "fees") {
+                            inputElement.value = inputElement.value + " " + "[Interest]"
+                            preview.innerHTML = preview.innerHTML + " " + "2000000"
+                        } else if (data == "balance") {
+                            inputElement.value = inputElement.value + " " + "[Account Balance]"
+                            preview.innerHTML = preview.innerHTML + " " + "100000"
+                        } else if (data == "percentage") {
+                            inputElement.value = inputElement.value + " " + "[Loan amount]"
+                            preview.innerHTML = preview.innerHTML + " " + "10%"
+                        } else if (data == "total") {
+                            inputElement.value = inputElement.value + " " + "[Date]"
+                            preview.innerHTML = preview.innerHTML + " " + "100000"
+                        }
+                    })
+                })
+    </script>
+    <style>
+        .loader {
+        display:flex;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid blue;
+        border-bottom: 16px solid blue;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        }
+        .theadmonkey {
+        background-color: #E40B46;
+        },
+
+        .defaulters {
+        display: flex;
+        background-color: #E40B46;
+        }
+
+        @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
+
+        .message-sender{
+        width:100%;
+        justify-content:center;
+        align-items:center;
+        filter: alpha(opacity=50);
+        display:none;
+        flex-direction:column;
+        padding:10px
+        }
+        .percentage-place{
+        display:none;
+        }
+    </style>
+{% endblock %}

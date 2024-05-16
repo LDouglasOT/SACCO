@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0009_remove_customuser_user_users_delete_user'),
+        ("home", "0009_remove_customuser_user_users_delete_user"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='users',
-            name='birthday',
+            model_name="users",
+            name="birthday",
         ),
         migrations.AddField(
-            model_name='notifications',
-            name='notification',
-            field=models.CharField(default='none', max_length=255),
+            model_name="notifications",
+            name="notification",
+            field=models.CharField(default="none", max_length=255),
         ),
     ]

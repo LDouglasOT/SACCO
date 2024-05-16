@@ -1,247 +1,265 @@
 {% extends "home/dashboard.html" %}
 {% block dashboard %}
-  <div class="bg-slate-800 w-full px-30 w-9/12">
-   
-    <div class='flex items-center justify-between px-16 bg-slate-700 rounded'>
-      <div>
-        <h3 class='text-3xl font-bold text-slate-100'>{{user.firstname}}' Dashboard</h3>
-        <h3 class='flex items-center my-1 text-slate-100'><IoIosCall /> 256780621421</h3>
-      </div>
-      <div>
-        <div class='flex items-center bg-slate-700 py-3 rounded-xl px-2 mx-2 mb-auto'>
-        <div class="avatar online">
-        <div class="w-16 rounded-full">   
-        <img class="rounded-full" src="https://avatars.githubusercontent.com/u/89447046?v=4" />
-        </div>
-        </div>
-        <div class='text-white mx-2'>{{user.firstname}} <br /> {{user.lastname}}</div>
-        </div>
-      </div>
-      </div>
-
-      <div class='px-16'>
-        <div class="w-full  my-5 flex items-center bg-[#9c6bde] justify-between rounded-2xl">
-            <div class="px-3">
-                <h1 class="text-white text-3xl">Hi {{user.lastname}}! 👋👋</h1>
-                <p class="text-white text-xl">Welcome Back!</p>
+    <div class="bg-slate-800 w-full px-30 w-9/12">
+        <div class='flex items-center justify-between px-16 bg-slate-700 rounded'>
+            <div>
+                <h3 class='text-3xl font-bold text-slate-100'>{{ request.user.username }}' Dashboard</h3>
+                <h3 class='flex items-center my-1 text-slate-100'>
+                    <IoIosCall /> 256780621421
+                </h3>
             </div>
-            <img class="w-7/12" src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/main-photo.png?alt=media&token=77303e91-c77c-477c-8ef5-9193771ca8c8" alt="back ground header image"/>
+            <div>
+                <div class='flex items-center bg-slate-700 py-3 rounded-xl px-2 mx-2 mb-auto'>
+                    <div class="avatar online">
+                        <div class="w-16 rounded-full">
+                            <img class="rounded-full"
+                                 src="https://avatars.githubusercontent.com/u/89447046?v=4" />
+                        </div>
+                    </div>
+                    <div class='text-white mx-2'>
+                        {{ user.firstname }}
+                        <br />
+                        {{ user.lastname }}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class='grid grid-cols-3 gap-3 px-16'>
-
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/sales-balance.png" alt="sales-balance" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Transactions</div>
-            <div class="stat-value text-slate-100">{{transaction}}</div>
-          </div>
+        <div class='px-16'>
+            <div class="w-full  my-5 flex items-center bg-[#9c6bde] justify-between rounded-2xl">
+                <div class="px-3">
+                    <h1 class="text-white text-3xl">Hi {{ user.lastname }}! 👋👋</h1>
+                    <p class="text-white text-xl">Welcome Back!</p>
+                </div>
+                <img class="w-7/12"
+                     src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/main-photo.png?alt=media&token=77303e91-c77c-477c-8ef5-9193771ca8c8"
+                     alt="back ground header image" />
+            </div>
         </div>
-      
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-16 my-2'>
-          <img width="64" height="64" src="https://img.icons8.com/external-outline-lafs/64/external-ic_transactions-cryptocurrency-and-cryptowallet-outline-lafs.png" alt="external-ic_transactions-cryptocurrency-and-cryptowallet-outline-lafs" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Account Balance</div>
-            <div class="stat-value text-slate-100">{{account.accountBalance}}</div>
-          </div>
+        <div class='grid grid-cols-3 gap-3 px-16'>
+            <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
+                <img width="50"
+                     height="50"
+                     src="https://img.icons8.com/ios-filled/50/sales-balance.png"
+                     alt="sales-balance"
+                     style="filter: invert(100%)" />
+                <div class="stat place-items-start">
+                    <div class="stat-title text-slate-100 flex justify-between items-center w-full">
+                        <span>Transactions</span> <span>{{ transactioncount }}</span>
+                    </div>
+                    <div class="stat-value text-slate-100">{{ transaction }}</div>
+                </div>
+            </div>
+            <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-16 my-2'>
+                <img width="64"
+                     height="64"
+                     src="https://img.icons8.com/external-outline-lafs/64/external-ic_transactions-cryptocurrency-and-cryptowallet-outline-lafs.png"
+                     alt="external-ic_transactions-cryptocurrency-and-cryptowallet-outline-lafs"
+                     style="filter: invert(100%)" />
+                <div class="stat place-items-start">
+                    <div class="stat-title text-slate-100">Principle Balance</div>
+                    <div class="stat-value text-slate-100">{{ accountBalance.accountBalance__sum }}</div>
+                </div>
+            </div>
+            {% if not request.user.is_staff %}
+                <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
+                    <img width="64"
+                         height="64"
+                         src="https://img.icons8.com/pastel-glyph/64/bank-card-back-side.png"
+                         alt="bank-card-back-side"
+                         style="filter: invert(100%)" />
+                    <div class="stat place-items-start">
+                        <div class="stat-title text-slate-100">Account Number</div>
+                        <div class="stat-value text-slate-100">{{ account.accountNumber }}</div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
+                <img width="50"
+                     height="50"
+                     src="https://img.icons8.com/ios-filled/50/get-revenue.png"
+                     alt="get-revenue"
+                     style="filter: invert(100%)" />
+                <div class="stat place-items-start">
+                    <div class="stat-title text-slate-100">Credit Score</div>
+                    <div class="stat-value text-slate-100">5/10</div>
+                </div>
+            </div>
+            {% if request.user.is_staff %}
+                <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
+                    <img width="50"
+                         height="50"
+                         src="https://img.icons8.com/ios-filled/50/get-revenue.png"
+                         alt="get-revenue"
+                         style="filter: invert(100%)" />
+                    <div class="stat place-items-start">
+                        <div class="stat-title text-slate-100">Registered Clients</div>
+                        <div class="stat-value text-slate-100">{{ accountCount }}</div>
+                    </div>
+                </div>
+                <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
+                    <img width="50"
+                         height="50"
+                         src="https://img.icons8.com/ios-filled/50/get-revenue.png"
+                         alt="get-revenue"
+                         style="filter: invert(100%)" />
+                    <div class="stat place-items-start">
+                        <div class="stat-title text-slate-100 flex items-center justify-between w-full">
+                            <span>Active Loans</span> <span>{{ loanCount }}</span>
+                        </div>
+                        <div class="stat-value text-slate-100">{{ loantotal.loanAmount__sum }}</div>
+                    </div>
+                </div>
+                <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
+                    <img width="50"
+                         height="50"
+                         src="https://img.icons8.com/ios-filled/50/get-revenue.png"
+                         alt="get-revenue"
+                         style="filter: invert(100%)" />
+                    <div class="stat place-items-start">
+                        <div class="stat-title text-slate-100 flex items-center justify-between w-full">
+                            <span>Pending Loans</span> <span>{{ pendingCount }}</span>
+                        </div>
+                        <div class="stat-value text-slate-100">{{ pending.loanAmount__sum }}</div>
+                    </div>
+                </div>
+                <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
+                    <img width="50"
+                         height="50"
+                         src="https://img.icons8.com/ios-filled/50/get-revenue.png"
+                         alt="get-revenue"
+                         style="filter: invert(100%)" />
+                    <div class="stat place-items-start">
+                        <div class="stat-title text-slate-100 flex justify-between w-full">
+                            <span>Disbursed Loans Amount</span> <span>{{ disbursecount }} <span class="text-sm">loans</span></span>
+                        </div>
+                        <div class="stat-value text-slate-100">{{ disburse.loanAmount__sum }}</div>
+                    </div>
+                </div>
+                <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
+                    <img width="50"
+                         height="50"
+                         src="https://img.icons8.com/ios-filled/50/get-revenue.png"
+                         alt="get-revenue"
+                         style="filter: invert(100%)" />
+                    <div class="stat place-items-start">
+                        <div class="stat-title text-slate-100">Withdrawals</div>
+                        <div class="stat-value text-slate-100">5/10</div>
+                    </div>
+                </div>
+                <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
+                    <img width="50"
+                         height="50"
+                         src="https://img.icons8.com/ios-filled/50/get-revenue.png"
+                         alt="get-revenue"
+                         style="filter: invert(100%)" />
+                    <div class="stat place-items-start">
+                        <div class="stat-title text-slate-100">Expected</div>
+                        <div class="stat-value text-slate-100">5/10</div>
+                    </div>
+                </div>
+                <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
+                    <img width="50"
+                         height="50"
+                         src="https://img.icons8.com/ios-filled/50/get-revenue.png"
+                         alt="get-revenue"
+                         style="filter: invert(100%)" />
+                    <div class="stat place-items-start">
+                        <div class="stat-title text-slate-100">Interest Balance</div>
+                        <div class="stat-value text-slate-100">{{ interest.loanInterest__sum }}</div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
-      
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="64" height="64" src="https://img.icons8.com/pastel-glyph/64/bank-card-back-side.png" alt="bank-card-back-side" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Account Number</div>
-            <div class="stat-value text-slate-100">{{account.accountNumber}}</div>
-          </div>
+        <div class="fixed flex flex-col hidden items-center justify-center bg-slate-700 w-full h-screen top-0 z-10 payment-div">
+            <div class="headers-move">
+                <h1 class="text-white text-2xl my-16 font-bold">Select a Payment Method To Proceed</h1>
+            </div>
+            <div class="flex items-center justify-around mr-30">
+                <div class="logo-container mx-10" onclick="showMobileMoneyInputs()">
+                    <img class="w-60 h-40"
+                         src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/Airtel-and-MTN-Mobile-Money-Services.jpeg?alt=media&token=5a18fa5b-55cc-4ab4-a934-0b18ac9a2c6f"
+                         alt="Airtel and mtn mobile money logout">
+                </div>
+                <div class="logo-container mx-10">
+                    <img class="w-60 h-40"
+                         src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/banktransfer.png?alt=media&token=5ba538df-2b84-4307-a0b9-d0176fd79d78"
+                         alt="Airtel and mtn mobile money logout">
+                </div>
+            </div>
+            <div id="mobileMoneyInputs" class="inputs-container w-4/12">
+                <div>
+                    <div cass="form-control">
+                        <span class="my-3 text-white my-2">Enter Mobile money number</span>
+                        <br />
+                        <label class="input-group">
+                            <input type="text" placeholder="0.01" class="input input-bordered w-full" />
+                            <span class="px-5">🇺🇬</span>
+                        </label>
+                    </div>
+                    <div class="form-control w-full my-2">
+                        <h3 class="text-white my-3">Enter amount</h3>
+                        <label class="input-group w-full">
+                            <input type="text" placeholder="0.01" class="input w-full input-bordered" />
+                            <span>UGX</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <span class="my-3 text-white bg-slate-500 px-10 py-4 rounded-3xl flex justify-center items-center my-5 w-4/12 submit-btn">Continue</span>
         </div>
-      
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Credit Score</div>
-            <div class="stat-value text-slate-100">5/10</div>
-          </div>
-        </div>
-        {% if request.user.is_staff %}
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Registered Clients</div>
-            <div class="stat-value text-slate-100">5/10</div>
-          </div>
-        </div>
-       
-      
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Active Loans</div>
-            <div class="stat-value text-slate-100">0/10</div>
-          </div>
-        </div>
-      
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Deposits</div>
-            <div class="stat-value text-slate-100">5/10</div>
-          </div>
-        </div>
-        
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Principle Balance</div>
-            <div class="stat-value text-slate-100">5/10</div>
-          </div>
-        </div>
-
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Withdrawals</div>
-            <div class="stat-value text-slate-100">5/10</div>
-          </div>
-        </div>
-
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Expected</div>
-            <div class="stat-value text-slate-100">5/10</div>
-          </div>
-        </div>
-
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Interest Balance</div>
-            <div class="stat-value text-slate-100">5/10</div>
-          </div>
-        </div>
-
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Bodas Financed</div>
-            <div class="stat-value text-slate-100">5/10</div>
-          </div>
-        </div>
-
-        <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
-          <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/get-revenue.png" alt="get-revenue" style="filter: invert(100%);"/>
-          <div class="stat place-items-start">
-            <div class="stat-title text-slate-100">Interest Balance</div>
-            <div class="stat-value text-slate-100">5/10</div>
-          </div>
-        </div>
+        {% if not request.user.is_staff %}
+            <div class='flex flex-col items-center justify-around'>
+                <div class="flex w-full px-16 items-center justify-around justify-between ">
+                    <div class="flex bg-slate-700 text-primary-content w-full rounded-lg">
+                        <div class="stat">
+                            <div class="stat-title text-white">Savings Balance</div>
+                            <div class="stat-value text-white">UGX {{ account.accountBalance }}</div>
+                            <div class="stat-actions">
+                                <button class="btn btn-sm mx-1 widthraw-btn">withdraw</button>
+                                <button class="btn btn-sm mx-1">Deposit</button>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title text-white">Total Savings</div>
+                            <div class="stat-value text-white">UGX {{ loantotal.loanAmount__sum }}</div>
+                            <div class="stat-actions"></div>
+                        </div>
+                    </div>
+                    <div class="flex bg-slate-700 text-primary-content w-full  rounded-lg">
+                        <div class="stat">
+                            <div class="stat-title text-white">Total loan disbursed</div>
+                            <div class="stat-value text-white">UGX 400,000</div>
+                            <div class="stat-actions">
+                                <button class="btn btn-sm mx-1">withdraw</button>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title text-white">Account Names</div>
+                            <div class="stat-value text-white">{{ account.accountName }}</div>
+                            <div class="stat-actions"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endif %}
-      </div>
-      
-      <div class="fixed flex flex-col hidden items-center justify-center bg-slate-700 w-full h-screen top-0 z-10 payment-div">
-        <div  class="headers-move">
-          <h1 class="text-white text-2xl my-16 font-bold">Select a Payment Method To Proceed</h1>
+        <div class="w-full flex justify-between px-1">
+            <div class="bg-slate-800 w-6/12 px-10">
+                <div class="flex flex-col items-center justify-center bg-slate-700 w-full my-16 h-80 rounded-xl"
+                     style="height: 500px">
+                    <h1 class="my-5 font-bold text-white text-3xl">Graph Showing Monthy Savings Progress</h1>
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-slate-800 w-6/12 px-10">
+                <div class="flex flex-col items-center justify-center bg-slate-700 w-full my-16 h-80 rounded-xl"
+                     style="height: 500px">
+                    <h1 class="my-5 font-bold text-white text-3xl">Graph Showing Monthy Savings Progress</h1>
+                    <canvas id="loanChart"></canvas>
+                </div>
+            </div>
         </div>
-
-        <div class="flex items-center justify-around mr-30">
-            <div class="logo-container mx-10" onclick="showMobileMoneyInputs()">
-                <img class="w-60 h-40" src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/Airtel-and-MTN-Mobile-Money-Services.jpeg?alt=media&token=5a18fa5b-55cc-4ab4-a934-0b18ac9a2c6f" alt="Airtel and mtn mobile money logout">
-            </div>
-            <div class="logo-container mx-10">
-                <img class="w-60 h-40" src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/banktransfer.png?alt=media&token=5ba538df-2b84-4307-a0b9-d0176fd79d78" alt="Airtel and mtn mobile money logout">
-            </div>
-        </div>
-        <div id="mobileMoneyInputs" class="inputs-container w-4/12">
-
-        <div>
-            <div cass="form-control">
-                    <span class="my-3 text-white my-2">Enter Mobile money number</span>
-           <br/>
-                <label class="input-group">
-                    <input type="text" placeholder="0.01" class="input input-bordered w-full" />
-                    <span class="px-5"> 🇺🇬 </span>
-                </label>
-            </div>
-            <div class="form-control w-full my-2">
-                <h3 class="text-white my-3">Enter amount</h3>
-                <label class="input-group w-full">
-                    <input type="text" placeholder="0.01" class="input w-full input-bordered" />
-                    <span>UGX</span>
-                </label>
-            </div>
-           
-        </div>
-      </div>
-      
-      <span class="my-3 text-white bg-slate-500 px-10 py-4 rounded-3xl flex justify-center items-center my-5 w-4/12 submit-btn">Continue</span>
     </div>
-    
-
-      <div class='flex flex-col items-center justify-around'>
-
-        <div class="flex w-full px-16 items-center justify-around justify-between ">
-          <div class="flex bg-slate-700 text-primary-content w-full rounded-lg">
-            <div class="stat">
-                <div class="stat-title text-white">Savings Balance</div>
-                <div class="stat-value text-white">UGX {{account.accountBalance}}</div>
-                <div class="stat-actions">
-                    <button class="btn btn-sm mx-1 widthraw-btn">withdraw</button>
-                   <button class="btn btn-sm mx-1">Deposit</button>
-                </div>
-            </div>
-            <div class="stat">
-                <div class="stat-title text-white">Total Savings</div>
-                <div class="stat-value text-white">UGX {{loantotal.loanAmount__sum}}</div>
-                <div class="stat-actions">
-                </div>
-            </div>
-          </div>
-  
-        <div class="flex bg-slate-700 text-primary-content w-full  rounded-lg">
-          <div class="stat">
-              <div class="stat-title text-white">Total loan disbursed</div>
-              <div class="stat-value text-white">UGX 400,000</div>
-              <div class="stat-actions">
-                  <button class="btn btn-sm mx-1">withdraw</button>
-              </div>
-          </div>
-          <div class="stat">
-              <div class="stat-title text-white">Account Names</div>
-              <div class="stat-value text-white">{{account.accountName}}</div>
-              <div class="stat-actions">
-              </div>
-          </div>
-
-        </div>
-
-
-        </div>
-
-
-      <div class="w-full flex justify-between px-1">
-        <div class="bg-slate-800 w-6/12 px-10">
-          <div class="flex flex-col items-center justify-center bg-slate-700 w-full my-16 h-80 rounded-xl" style="height: 500px;">
-            <h1 class="my-5 font-bold text-white text-3xl">Graph Showing Monthy Savings Progress</h1>
-            <canvas id="myChart"></canvas>
-          </div>
-         </div>
-
-         <div class="bg-slate-800 w-6/12 px-10">
-          <div class="flex flex-col items-center justify-center bg-slate-700 w-full my-16 h-80 rounded-xl" style="height: 500px;">
-            <h1 class="my-5 font-bold text-white text-3xl">Graph Showing Monthy Savings Progress</h1>
-            <canvas id="loanChart"></canvas>
-          </div>
-         </div>
-      </div>
-  
-
-
-      </div>
-
-   
- 
-   <script>
-
+    <script>
   const withdraw=document.querySelector(".widthraw-btn")
   console.log(withdraw)
   const popup = document.querySelector(".payment-div")
@@ -359,8 +377,8 @@ function showMobileMoneyInputs() {
       }
     });
 
-  </script>
-<style>
+    </script>
+    <style>
   .logo-container {
 
     transition: opacity 0.5s ease, transform 0.5s ease;
@@ -409,5 +427,5 @@ function showMobileMoneyInputs() {
 }
 
 
-</style>
+    </style>
 {% endblock %}

@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0010_remove_users_birthday_notifications_notification'),
+        ("home", "0010_remove_users_birthday_notifications_notification"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='account',
-            name='earned',
+            model_name="account",
+            name="earned",
             field=models.IntegerField(default=50000),
         ),
     ]

@@ -1,50 +1,54 @@
 {% extends "home/dashboard.html" %}
+
 {% block dashboard %}
-
 <div class="bg-slate-800 w-full h-screen px-30 w-9/12">
-  
     <div class='flex items-center justify-between px-16 bg-slate-800 rounded'>
-      <div>
-        <h3 class='text-3xl font-bold text-slate-100'>Douglas' Notifications</h3>
-        <h3 class='flex items-center my-1 text-slate-100'><IoIosCall /> 256780621421</h3>
-      </div>
-      <div>
-        <div class='flex items-center bg-slate-800 py-3 rounded-xl px-2 mx-2 mb-auto'>
-        <div class="avatar online">
-        <div class="w-16 rounded-full">   
-        <img class="rounded-full" src="https://avatars.githubusercontent.com/u/89447046?v=4" />
+        <div>
+            <h3 class='text-3xl font-bold text-slate-100'>{{ request.user.username }}'s Notifications</h3>
+            <h3 class='flex items-center my-1 text-slate-100'>
+                <IoIosCall /> 256780621421
+            </h3>
         </div>
+        <div>
+            <div class='flex items-center bg-slate-800 py-3 rounded-xl px-2 mx-2 mb-auto'>
+                <div class="avatar online">
+                    <div class="w-16 rounded-full">
+                        <img class="rounded-full" src="https://avatars.githubusercontent.com/u/89447046?v=4" />
+                    </div>
+                </div>
+                <div class='text-white mx-2'>
+                    {{ request.user.username }}
+                    <br />
+                    {{ request.user.username }}
+                </div>
+            </div>
         </div>
-        <div class='text-white mx-2'>Douglas <br /> Luzinda</div>
-        </div>
-      </div>
     </div>
-
-  <div class="p-10 flex w-full items-center bg-slate-800 justify-between">
-      <h3 class="text-lg font-bold text-white">4 Notifications</h3>
-
-      <label class="input w-7/12 input-bordered flex items-center gap-2">
-        <input type="text" class="grow" placeholder="Search" />
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" /></svg>
-      </label>
-      <div></div>
-      <div></div>
-  </div>
-
-{% for notification in notifications %}
-  <div class="overflow-x-auto w-full bg-slate-800 px-10 flex flex-col items-center justify-center">
-  <div class="w-10/12 bg-slate-700 rounded-lg px-3 py-1">
-    <h1 class="text-orange-500 font-bold">{{notification.notificationType}}</h1>
-    <p class="text-white">{{notification.notification}}</p>
-    <div class="w-full flex flex-row justify-between items-center my-1">
-      <span class="badge badge-ghost badge-sm p-3"></i><i class="fa-solid fa-coins mx-1"></i>Group notification</span>
-      <h1 class="text-gray-300 ml-auto text-sm">{{notification}}</h1>
+    <div class="p-10 flex w-full items-center bg-slate-800 justify-between">
+        <h3 class="text-lg font-bold text-white">4 Notifications</h3>
+        <label class="input w-7/12 input-bordered flex items-center gap-2">
+            <input type="text" class="grow" placeholder="Search" />
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 16 16"
+                 fill="currentColor"
+                 class="w-4 h-4 opacity-70">
+                <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
+            </svg>
+        </label>
+        <div></div>
+        <div></div>
     </div>
-  </div>
-{% endfor %}
-
-  </div>
-
+    <div class="overflow-x-auto w-full bg-slate-800 px-10 flex flex-col items-center justify-center">
+        {% for notification in notifications %}
+        <div class="w-10/12 bg-slate-700 rounded-lg my-2 px-3 py-1">
+            <h1 class="text-orange-500 font-bold">{{ notification.notificationType }}</h1>
+            <p class="text-white">{{ notification.notification }}</p>
+            <div class="w-full flex flex-row justify-between items-center my-1">
+                <span class="badge badge-ghost badge-sm p-3"><i class="fa-solid fa-coins mx-1"></i>{{notification.notificationOwner}}</span>
+                <h1 class="text-gray-300 ml-auto text-sm">Created: {{ notification.createdAt }}</h1>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-
 {% endblock %}

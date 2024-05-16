@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0001_initial'),
+        ("home", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='account',
-            name='userId',
+            model_name="account",
+            name="userId",
             field=models.CharField(blank=True, max_length=255, null=True, unique=True),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='membershipNumber',
+            model_name="user",
+            name="membershipNumber",
             field=models.CharField(blank=True, max_length=255, null=True),
         ),
     ]

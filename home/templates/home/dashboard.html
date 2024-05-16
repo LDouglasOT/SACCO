@@ -1,6 +1,5 @@
 {% load static tailwind_tags %}
 {% load humanize %}
-
 <!DOCTYPE html>
 <html lang="en" data-theme="cupcake">
     <head>
@@ -13,135 +12,189 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://kit.fontawesome.com/02b167d900.js"
                 crossorigin="anonymous"></script>
-        <a href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <a href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css"
+           rel="stylesheet"
+           type="text/css" />
         <script src="https://cdn.tailwindcss.com"></script>
-		<link
-		href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css"
-		rel="stylesheet"
-		type="text/css"
-	  />
-	  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
-
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css"
+              rel="stylesheet"
+              type="text/css" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
         {% tailwind_css %}
         <html lang="en">
-        <title>Sacco.</title>
-    </head>
-    <body class="bg-slate-800">
-<div class="flex bg-slate-800">
-	<div style="width: 200px;background:#1E232A;" class='h-screen fixed'>
-	<div class='flex items-center py-3 px-2'>
-	<br />
-	<br />
-	  <h2 class='text-white text-xl mx-2 my-5'>
-		Odyssey Sacco
-	  </h2>
-	  <br />
-	   <hr />
-	  <br />
-	  <br />
-	</div>
-	  <ul class='mx-5'>
-		<li class='my-1'>
-		<a href="{% url 'dashboard' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-chart-line mx-3"></i> Dashboard</h2></a>
-		</li>
-		<br />
-		{% if request.user.is_staff %}
-		<li class='my-1'>
-		  <div class="cursor-pointer" onclick="toggleSection('members')"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-users-line mx-3"></i>Members</h2></div>
-		  <ul class="pl-2 py-1 hidden animate-fade-in text-white ml-10" id="members">
-			<li class="text-white text-lg cursor-pointer"><a href="{% url 'members' %}" class="text-slate-200">Active</a></li>
-			<li class="text-white text-lg cursor-pointer"><a href="{% url 'pendingmembers' %}" class="text-slate-200">Pending</a></li>
-			<li class="text-white text-lg cursor-pointer"><a href="{% url 'suspendedmembers' %}" class="text-slate-200">Suspended</a></li>
-		  </ul>
-		</li>
-		<br />
-		{% endif %}
-		<li class='my-1'>
-		  <div onclick="toggleSection('loans')"><h2 class='text-white text-xl cursor-pointer flex items-center flex justify-start'><i class="fa-solid fa-plane-arrival mx-3"></i>Loans</h2></div>
-		  <ul class="pl-2 py-1 hidden animate-fade-in text-white ml-10" id="loans">
-			<li class="text-white text-lg cursor-pointer"><a href="{% url 'loans' %}" class="text-slate-200">Active</a></li>
-			<li class="text-white text-lg cursor-pointer"><a href="{% url 'pendingLoans' %}" class="text-slate-200">Approval</a></li>
-			<li class="text-white text-lg cursor-pointer"><a href="{% url 'disburse' %}" class="text-slate-200">Disbursement</a></li>
-		  </ul>
-		</li>
-		<br />
-		<li class='my-1'>
-		  <a href="{% url 'notifications' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-bell mx-3"></i>Notification</h2></a>
-		</li>
-		<br />
-		<li class='my-1'>
-		  <a href="{% url 'transactions' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-money-bill-transfer mx-3"></i>Transactions</h2></a>
-		</li>
-		<br />
-		<li class='my-1'>
-			<a href="{% url 'transactions' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-money-bill-transfer mx-3"></i>Withdrawals</h2></a>
-		  </li>
-		  <br />
-		  <li class='my-1'>
-			<a href="{% url 'transactions' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-money-bill-wave mx-3"></i>Repayments</h2></a>
-		  </li>
-		<br>
-		<li class='my-1'>
-			<a href="{% url 'transactions' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-calculator mx-3"></i>Accounting</h2></a>
-		  </li>
-		<br>
-		<li class='my-1'>
-		<a href="{% url 'transactions' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-regular fa-message mx-3"></i>sms</h2></a>
-		</li>
-		<br />
-		<li class='my-1'>
-		  <a href="{% url 'profile' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-user mx-3"></i>Profile</h2></a>
-		</li>
-		<br />
-		<li class='my-1'>
-		  <a href="{% url 'logout' %}"><h2 class='text-white text-xl flex items-center flex justify-start'><i class="fa-solid fa-right-from-bracket mx-3"></i>logout</h2></a>
-		</li>
-		<br />	
-		  
-			
-		</ul>
-		<div class='flex items-center bg-slate-700 py-3 rounded-xl px-2 mx-2 b-0'>
-			<div class="avatar online">
-				<div class="w-16 rounded-full">   
-			<img class="rounded-full" src="https://avatars.githubusercontent.com/u/89447046?v=4" />
-			</div>
-	  		</div>
-	  	 	<div class='text-white mx-2'>{{request.user.username}}</div>
-	 		</div>
-			</div>
-		</div>
+            <title>Sacco.</title>
+        </head>
+        <body class="bg-slate-800">
+            <div class="flex bg-slate-800">
+                <div style="width: 200px;background:#1E232A;" class='h-screen fixed'>
+                    <div class='flex items-center py-3 px-2'>
+                        <br />
+                        <br />
+                        <h2 class='text-white text-xl mx-2 my-5'>Odyssey Sacco</h2>
+                        <br />
+                        <hr />
+                        <br />
+                        <br />
+                    </div>
+                    <ul class='mx-5'>
+                        <li class='my-1'>
+                            <a href="{% url 'dashboard' %}">
+                                <h2 class='text-white text-xl flex items-center flex justify-start'>
+                                    <i class="fa-solid fa-chart-line mx-3"></i> Dashboard
+                                </h2>
+                            </a>
+                        </li>
+                        <br />
+                        {% if request.user.is_staff %}
+                            <li class='my-1'>
+                                <div class="cursor-pointer" onclick="toggleSection('members')">
+                                    <h2 class='text-white text-xl flex items-center flex justify-start'>
+                                        <i class="fa-solid fa-users-line mx-3"></i>Members
+                                    </h2>
+                                </div>
+                                <ul class="pl-2 py-1 hidden animate-fade-in text-white ml-10"
+                                    id="members">
+                                    <li class="text-white text-lg cursor-pointer">
+                                        <a href="{% url 'members' %}" class="text-slate-200">Active</a>
+                                    </li>
+                                    <li class="text-white text-lg cursor-pointer">
+                                        <a href="{% url 'pendingmembers' %}" class="text-slate-200">Pending</a>
+                                    </li>
+                                    <li class="text-white text-lg cursor-pointer">
+                                        <a href="{% url 'suspendedmembers' %}" class="text-slate-200">Suspended</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <br />
+                        {% endif %}
+                        <li class='my-1'>
+                            <div onclick="toggleSection('loans')">
+                                <h2 class='text-white text-xl cursor-pointer flex items-center flex justify-start'>
+                                    <i class="fa-solid fa-plane-arrival mx-3"></i>Loans
+                                </h2>
+                            </div>
+                            <ul class="pl-2 py-1 hidden animate-fade-in text-white ml-10" id="loans">
+                                <li class="text-white text-lg cursor-pointer">
+                                    <a href="{% url 'loans' %}" class="text-slate-200">Active</a>
+                                </li>
+                                <li class="text-white text-lg cursor-pointer">
+                                    <a href="{% url 'pendingLoans' %}" class="text-slate-200">Approval</a>
+                                </li>
+                                <li class="text-white text-lg cursor-pointer">
+                                    <a href="{% url 'disburse' %}" class="text-slate-200">Disbursement</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <br />
+                        <li class='my-1'>
+                            <a href="{% url 'notifications' %}">
+                                <h2 class='text-white text-xl flex items-center flex justify-start'>
+                                    <i class="fa-solid fa-bell mx-3"></i>Notification
+                                </h2>
+                            </a>
+                        </li>
+                        <br />
+                        <li class='my-1'>
+                            <a href="{% url 'transactions' %}">
+                                <h2 class='text-white text-xl flex items-center flex justify-start'>
+                                    <i class="fa-solid fa-money-bill-transfer mx-3"></i>Transactions
+                                </h2>
+                            </a>
+                        </li>
+                        <br />
+                        <li class='my-1'>
+                            <a href="{% url 'transactions' %}">
+                                <h2 class='text-white text-xl flex items-center flex justify-start'>
+                                    <i class="fa-solid fa-money-bill-transfer mx-3"></i>Withdrawals
+                                </h2>
+                            </a>
+                        </li>
+                        <br />
+                        <li class='my-1'>
+                            <a href="{% url 'transactions' %}">
+                                <h2 class='text-white text-xl flex items-center flex justify-start'>
+                                    <i class="fa-solid fa-money-bill-wave mx-3"></i>Repayments
+                                </h2>
+                            </a>
+                        </li>
+                        <br>
+                        <li class='my-1'>
+                            <a href="{% url 'transactions' %}">
+                                <h2 class='text-white text-xl flex items-center flex justify-start'>
+                                    <i class="fa-solid fa-calculator mx-3"></i>Accounting
+                                </h2>
+                            </a>
+                        </li>
+                        <br>
+                        <li class='my-1'>
+                            <a href="{% url 'whatsapp' %}">
+                                <h2 class='text-white text-xl flex items-center flex justify-start'>
+                                    <i class="fa-brands fa-whatsapp mx-3"></i>Whatsapp
+                                </h2>
+                            </a>
+                        </li>
+                        <br />
+                        <li class='my-1'>
+                            <a href="{% url 'profile' %}">
+                                <h2 class='text-white text-xl flex items-center flex justify-start'>
+                                    <i class="fa-solid fa-user mx-3"></i>Profile
+                                </h2>
+                            </a>
+                        </li>
+                        <br />
+                        <li class='my-1'>
+                            <a href="{% url 'logout' %}">
+                                <h2 class='text-white text-xl flex items-center flex justify-start'>
+                                    <i class="fa-solid fa-right-from-bracket mx-3"></i>logout
+                                </h2>
+                            </a>
+                        </li>
+                        <br />
+                    </ul>
+                    <div class='flex items-center bg-slate-700 py-3 rounded-xl px-2 mx-2 b-0'>
+                        <div class="avatar online">
+                            <div class="w-16 rounded-full">
+                                <img class="rounded-full"
+                                     src="https://avatars.githubusercontent.com/u/89447046?v=4" />
+                            </div>
+                        </div>
+                        <div class='text-white mx-2'>{{ request.user.username }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class='bg-slate-200 w-9/12' style="margin-left: 10%; width: 90%;">
+                {% block dashboard %}{% endblock %}
+            </div>
+        </div>
+        <script>
+		function toggleSection(sectionId) {
+	const section = document.getElementById(sectionId);
+	section.classList.toggle("hidden");
+	}
+	
+        </script>
+        <style>
+		@keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+	}
 
-	<div class='bg-slate-200 w-9/12' style="margin-left: 10%; width: 90%;">
-			{% block dashboard %}{% endblock %}
-	</div>
-  </div>
-<script>
-	function toggleSection(sectionId) {
-  const section = document.getElementById(sectionId);
-  section.classList.toggle("hidden");
-}
-</script>
-<style>
-	@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+	@keyframes fadeOut {
+	from { opacity: 1; }
+	to { opacity: 0; }
+	}
 
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
+	.animate-fade-in {
+	animation: fadeIn 0.3s ease-in-out;
+	}
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-in-out;
-}
+	.animate-fade-out {
+	animation: fadeOut 0.3s ease-in-out;
+	}
 
-.animate-fade-out {
-  animation: fadeOut 0.3s ease-in-out;
-}
-
-</style>
-</body>
+	
+        </style>
+    </body>
 </html>

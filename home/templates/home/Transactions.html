@@ -1,67 +1,69 @@
 {% extends "home/dashboard.html" %}
-
 {% block dashboard %}
-
-<div class="bg-slate-800 w-full h-screen px-30 w-9/12">
-  
-    <div class='flex items-center justify-between px-16 bg-slate-800 rounded'>
-      <div>
-        <h3 class='text-3xl font-bold text-slate-100'>Douglas' Dashboard</h3>
-        <h3 class='flex items-center my-1 text-slate-100'><IoIosCall /> 256780621421</h3>
-      </div>
-      <div>
-        <div class='flex items-center bg-slate-800 py-3 rounded-xl px-2 mx-2 mb-auto'>
-        <div class="avatar online">
-        <div class="w-16 rounded-full">   
-        <img class="rounded-full" src="https://avatars.githubusercontent.com/u/89447046?v=4" />
+    <div class="bg-slate-800 w-full h-screen px-30 w-9/12">
+        <div class='flex items-center justify-between px-16 bg-slate-800 rounded'>
+            <div>
+                <h3 class='text-3xl font-bold text-slate-100'>{{ request.user.username }}' Dashboard</h3>
+                <h3 class='flex items-center my-1 text-slate-100'>
+                    <IoIosCall /> 256780621421
+                </h3>
+            </div>
+            <div>
+                <div class='flex items-center bg-slate-800 py-3 rounded-xl px-2 mx-2 mb-auto'>
+                    <div class="avatar online">
+                        <div class="w-16 rounded-full">
+                            <img class="rounded-full"
+                                 src="https://avatars.githubusercontent.com/u/89447046?v=4" />
+                        </div>
+                    </div>
+                    <div class='text-white mx-2'>
+                        {{ request.user.username }}
+                        <br />
+                        {{ request.user.username }}
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="p-10 flex w-full items-center bg-slate-800 justify-between">
+            <h3 class="text-lg font-bold text-white">Transaction History</h3>
+            <label class="input w-7/12 input-bordered flex items-center gap-2">
+                <input type="text" class="grow" placeholder="Search" />
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 16 16"
+                     fill="currentColor"
+                     class="w-4 h-4 opacity-70">
+                    <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
+                </svg>
+            </label>
+            <div class="text-white">
+                <button class="btn bg-white text-white ">New Transaction</button>
+            </div>
         </div>
-        <div class='text-white mx-2'>Douglas <br /> Luzinda</div>
+        <div class="overflow-x-auto w-full bg-slate-800 px-10">
+            <table class="table w-full bg-slate-700">
+                <thead class="bg-slate-700">
+                    <tr>
+                        <th>owner</th>
+                        <th>Date</th>
+                        <th>Transaction Type</th>
+                        <th>Amount</th>
+                        <th>Transaction status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.transactionOwner }}</td>
+                            <td>{{ transaction.createdAt }}</td>
+                            <td>{{ transaction.transactionType }}</td>
+                            <td>UGX {{ transaction.transactionAmount }}</td>
+                            <td>
+                                <div class="badge badge-success gap-2">success</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-      </div>
     </div>
-
-  <div class="p-10 flex w-full items-center bg-slate-800 justify-between">
-      <h3 class="text-lg font-bold text-white">Transaction History</h3>
-
-      <label class="input w-7/12 input-bordered flex items-center gap-2">
-        <input type="text" class="grow" placeholder="Search" />
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" /></svg>
-      </label>
-      
-      <div class="text-white"><button class="btn bg-white text-white ">New Transaction</button></div>
-  </div>
-
-
-  <div class="overflow-x-auto w-full bg-slate-800 px-10">
-      <table class="table w-full bg-slate-700">
-
-        <thead class="bg-slate-700">
-          <tr>
-            <th>owner</th>
-            <th>Date</th>
-            <th>Transaction Type</th>
-            <th>Amount</th>
-            <th>Transaction status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for transaction in transactions %}
-          <tr>
-            <td>{{transaction.transactionOwner}}</td>
-            <td>{{transaction.createdAt}}</td>
-            <td>{{transaction.transactionType}}</td>
-            <td>UGX {{transaction.transactionAmount}}</td>
-            <td>
-              <div class="badge badge-success gap-2">
-                success
-              </div>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>        
-      </table>
-    </div>
-</div>
-
 {% endblock %}
