@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from home.members import *
 from home.Loans import *
-
+from payments.views import *
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -54,6 +54,12 @@ urlpatterns = [
     path("loans/pending", PendingLoans, name="pendingLoans"),
     # This is where the loan payments are done
     path("whatsapp/", whatsapp, name="whatsapp"),
+    path("withdaw/", withdraw, name="withdraw"),
+    path("deposit/",deposit,name="deposit"),
+    path('loanfilter/',loanfilter,name="loanfilter"),
+    path("canceltransaction/<int:pk>", canceltransaction, name="canceltransaction"),
+    path("checktransaction/<int:pk>", checktransaction, name="checktransaction"),
+    path("details/<uuid:pk>", loandetails, name="loandetails"),
 ]
 
 if settings.DEBUG:

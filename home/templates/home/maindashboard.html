@@ -24,6 +24,42 @@
                 </div>
             </div>
         </div>
+        <div class="w-11/12 mt-4 mx-auto">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <div role="alert"
+                             class="alert alert-error flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="stroke-current shrink-0 h-6 w-6"
+                                 fill="none"
+                                 viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div class="w-full flex justify-between">
+                                <span class="text-xl ">{{ message }}</span>
+                                <div></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if message.tags == 'success' %}
+                        <div role="alert" class="alert alert-success">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="stroke-current shrink-0 h-6 w-6"
+                                 fill="none"
+                                 viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div class="w-full flex justify-between">
+                                <span>{{ message }}</span>
+                                <div></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% if paymentRequests < 0 %}
         <div class='px-16'>
             <div class="w-full  my-5 flex items-center bg-[#9c6bde] justify-between rounded-2xl">
                 <div class="px-3">
@@ -35,6 +71,26 @@
                      alt="back ground header image" />
             </div>
         </div>
+        {% else %}
+        <div class='px-16'>
+            {% for act in actual %}
+            <div class="w-full bg-white rounded-3xl flex items-center justify-between p-4 my-4">
+                <div>
+                    <h1>{{act.phone}}</h1>
+                    <h4>UGX {{act.amount}}</h4>
+                    <h4>{{act.narrative}}</h4>
+                    <h4 class="flex items-start justify-start">Status: <div class="mx-2"></div><div class="badge badge-warning gap-2">{{act.status}}</div></h4>
+                </div>
+                <div class="flex items-center justify-center">
+                    <a class="btn btn-sm btn-success my-5" href="{% url 'checktransaction' act.pk %}">Check</a>
+                    <br>
+                    <a href="{% url 'canceltransaction' act.pk %}" class="btn btn-error btn-sm">Cancel</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <div class='grid grid-cols-3 gap-3 px-16'>
             <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
                 <img width="50"
@@ -49,17 +105,19 @@
                     <div class="stat-value text-slate-100">{{ transaction }}</div>
                 </div>
             </div>
-            <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-16 my-2'>
-                <img width="64"
-                     height="64"
-                     src="https://img.icons8.com/external-outline-lafs/64/external-ic_transactions-cryptocurrency-and-cryptowallet-outline-lafs.png"
-                     alt="external-ic_transactions-cryptocurrency-and-cryptowallet-outline-lafs"
-                     style="filter: invert(100%)" />
-                <div class="stat place-items-start">
-                    <div class="stat-title text-slate-100">Principle Balance</div>
-                    <div class="stat-value text-slate-100">{{ accountBalance.accountBalance__sum }}</div>
+            {% if request.user.is_staff %}
+                <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-16 my-2'>
+                    <img width="64"
+                         height="64"
+                         src="https://img.icons8.com/external-outline-lafs/64/external-ic_transactions-cryptocurrency-and-cryptowallet-outline-lafs.png"
+                         alt="external-ic_transactions-cryptocurrency-and-cryptowallet-outline-lafs"
+                         style="filter: invert(100%)" />
+                    <div class="stat place-items-start">
+                        <div class="stat-title text-slate-100">Principle Balance</div>
+                        <div class="stat-value text-slate-100">{{ accountBalance.accountBalance__sum }}</div>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             {% if not request.user.is_staff %}
                 <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
                     <img width="64"
@@ -81,7 +139,11 @@
                      style="filter: invert(100%)" />
                 <div class="stat place-items-start">
                     <div class="stat-title text-slate-100">Credit Score</div>
-                    <div class="stat-value text-slate-100">5/10</div>
+                    <div class="stat-value text-slate-100 p-3">
+                        <div class="radial-progress bg-primary text-primary-content border-4 border-primary" style="--value:70  " style="--value:70; --size:4rem; --thickness: 3px;" role="progressbar">
+                        <h6 class="text-xs">700</h6>
+                        </div>
+                    </div>
                 </div>
             </div>
             {% if request.user.is_staff %}
@@ -117,7 +179,7 @@
                          style="filter: invert(100%)" />
                     <div class="stat place-items-start">
                         <div class="stat-title text-slate-100 flex items-center justify-between w-full">
-                            <span>Pending Loans</span> <span>{{ pendingCount }}</span>
+                            <span>Loans Pending Approval</span> <span>{{ pendingCount }}</span>
                         </div>
                         <div class="stat-value text-slate-100">{{ pending.loanAmount__sum }}</div>
                     </div>
@@ -142,8 +204,10 @@
                          alt="get-revenue"
                          style="filter: invert(100%)" />
                     <div class="stat place-items-start">
-                        <div class="stat-title text-slate-100">Withdrawals</div>
-                        <div class="stat-value text-slate-100">5/10</div>
+                        <div class="stat-title text-slate-100 flex justify-between w-full">
+                            <span>withdraws</span> <span>{{ withdeawcount }}</span>
+                        </div>
+                        <div class="stat-value text-slate-100">{{ withdraws.transactionAmount__sum }}</div>
                     </div>
                 </div>
                 <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
@@ -154,7 +218,7 @@
                          style="filter: invert(100%)" />
                     <div class="stat place-items-start">
                         <div class="stat-title text-slate-100">Expected</div>
-                        <div class="stat-value text-slate-100">5/10</div>
+                        <div class="stat-value text-slate-100">{{ combined_total }}</div>
                     </div>
                 </div>
                 <div class='flex items-center bg-slate-700 w-full rounded-xl py-5 px-5 my-2'>
@@ -170,43 +234,188 @@
                 </div>
             {% endif %}
         </div>
+
+
+       <!-- This is where the withdraw forma starts from -->
         <div class="fixed flex flex-col hidden items-center justify-center bg-slate-700 w-full h-screen top-0 z-10 payment-div">
-            <div class="headers-move">
-                <h1 class="text-white text-2xl my-16 font-bold">Select a Payment Method To Proceed</h1>
-            </div>
-            <div class="flex items-center justify-around mr-30">
-                <div class="logo-container mx-10" onclick="showMobileMoneyInputs()">
-                    <img class="w-60 h-40"
-                         src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/Airtel-and-MTN-Mobile-Money-Services.jpeg?alt=media&token=5a18fa5b-55cc-4ab4-a934-0b18ac9a2c6f"
-                         alt="Airtel and mtn mobile money logout">
+            <form action="{% url 'withdraw' %}"
+                  method="post"
+                  class="w-full flex items-center justify-center flex-col">
+                {% csrf_token %}
+                <div class="headers-move">
+                    <h1 class="text-white text-2xl my-16 font-bold">Select a Payment Method To Proceed</h1>
                 </div>
-                <div class="logo-container mx-10">
-                    <img class="w-60 h-40"
-                         src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/banktransfer.png?alt=media&token=5ba538df-2b84-4307-a0b9-d0176fd79d78"
-                         alt="Airtel and mtn mobile money logout">
-                </div>
-            </div>
-            <div id="mobileMoneyInputs" class="inputs-container w-4/12">
-                <div>
-                    <div cass="form-control">
-                        <span class="my-3 text-white my-2">Enter Mobile money number</span>
-                        <br />
-                        <label class="input-group">
-                            <input type="text" placeholder="0.01" class="input input-bordered w-full" />
-                            <span class="px-5">🇺🇬</span>
-                        </label>
+                <div class="flex items-center justify-around mr-30">
+                    <div class="logo-container mx-10" onclick="showMobileMoneyInputs()">
+                        <img class="w-60 h-40"
+                             src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/Airtel-and-MTN-Mobile-Money-Services.jpeg?alt=media&token=5a18fa5b-55cc-4ab4-a934-0b18ac9a2c6f"
+                             alt="Airtel and mtn mobile money logout">
                     </div>
-                    <div class="form-control w-full my-2">
-                        <h3 class="text-white my-3">Enter amount</h3>
-                        <label class="input-group w-full">
-                            <input type="text" placeholder="0.01" class="input w-full input-bordered" />
-                            <span>UGX</span>
-                        </label>
+                    <div class="logo-container mx-10">
+                        <img class="w-60 h-40"
+                             src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/banktransfer.png?alt=media&token=5ba538df-2b84-4307-a0b9-d0176fd79d78"
+                             alt="Airtel and mtn mobile money logout">
                     </div>
                 </div>
+                <div id="mobileMoneyInputs" class="inputs-container w-4/12">
+                    <div>
+                        <div cass="form-control">
+                            <span class="my-3 text-white my-2">Enter Mobile money number</span>
+                            <br />
+                            <label class="input-group">
+                                <input type="text"
+                                       name="phone"
+                                       placeholder="0.01"
+                                       class="input input-bordered w-full" />
+                                <span class="px-5">🇺🇬</span>
+                            </label>
+                        </div>
+                        <div class="form-control w-full my-2">
+                            <h3 class="text-white my-3">Enter amount</h3>
+                            <label class="input-group w-full">
+                                <input type="text"
+                                       name="amount"
+                                       placeholder="0.01"
+                                       class="input w-full input-bordered" />
+                                <span>UGX</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="w-4/12 bg-slate-500">
+                    <span class="my-3 text-white bg-slate-600 px-10 py-4 rounded-3xl flex justify-center items-center my-5 w-full submit-btn">Continue</span>
+                </button>
+            </form>
+            <br>
+            <br>
+            <div id="closemm"
+                 class="flex items-center justify-between top-0 bg-slate-800 px-10 rounded-xl py-2">
+                <i class="fa-solid fa-xmark text-white text-xl mx-2"></i>
+                <h4 class="text-white">Close</h4>
             </div>
-            <span class="my-3 text-white bg-slate-500 px-10 py-4 rounded-3xl flex justify-center items-center my-5 w-4/12 submit-btn">Continue</span>
         </div>
+        <!-- This is where the withdraw form ends -->
+
+        <!-- This is where the withdraw forma starts from -->
+           <div class="fixed flex flex-col hidden items-center justify-center bg-slate-700 w-full h-screen top-0 z-10 deposit-div">
+            <form action="{% url 'deposit' %}"
+                  method="post"
+                  class="w-full flex items-center justify-center flex-col">
+                {% csrf_token %}
+                <div class="headers-move">
+                    <h1 class="text-white text-2xl my-16 font-bold">Select a Payment Method To Deposit Money</h1>
+                </div>
+                <div class="flex items-center justify-around mr-30">
+                    <div class="logo-container mx-10" onclick="showMobileMoneyInputs()">
+                        <img class="w-60 h-40"
+                             src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/Airtel-and-MTN-Mobile-Money-Services.jpeg?alt=media&token=5a18fa5b-55cc-4ab4-a934-0b18ac9a2c6f"
+                             alt="Airtel and mtn mobile money logout">
+                    </div>
+                    <div class="logo-container mx-10">
+                        <img class="w-60 h-40"
+                             src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/banktransfer.png?alt=media&token=5ba538df-2b84-4307-a0b9-d0176fd79d78"
+                             alt="Airtel and mtn mobile money logout">
+                    </div>
+                </div>
+                <div id="mobileMoneyInputs" class="inputs-container w-4/12">
+                    <div>
+                        <div cass="form-control">
+                            <span class="my-3 text-white my-2">Enter Mobile money number</span>
+                            <br />
+                            <label class="input-group">
+                                <input type="text"
+                                       name="phone"
+                                       placeholder="0.01"
+                                       class="input input-bordered w-full" />
+                                <span class="px-5">🇺🇬</span>
+                            </label>
+                        </div>
+                        <div class="form-control w-full my-2">
+                            <h3 class="text-white my-3">Enter amount</h3>
+                            <label class="input-group w-full">
+                                <input type="text"
+                                       name="amount"
+                                       placeholder="0.01"
+                                       class="input w-full input-bordered" />
+                                <span>UGX</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="w-4/12 bg-slate-500">
+                    <span class="my-3 text-white bg-slate-600 px-10 py-4 rounded-3xl flex justify-center items-center my-5 w-full submit-btn">Continue</span>
+                </button>
+            </form>
+            <br>
+            <br>
+            <div id="closemm"
+                 class="flex items-center justify-between top-0 bg-slate-800 px-10 rounded-xl py-2">
+                <i class="fa-solid fa-xmark text-white text-xl mx-2"></i>
+                <h4 class="text-white">Close</h4>
+            </div>
+        </div>
+        <!-- This is where the withdraw form ends -->
+        
+        <!-- This is where the withdraw forma starts from -->
+        <div class="fixed flex flex-col hidden items-center justify-center bg-slate-700 w-full h-screen top-0 z-10 loan-div">
+            <form action="{% url 'withdraw' %}"
+                  method="post"
+                  class="w-full flex items-center justify-center flex-col">
+                {% csrf_token %}
+                <div class="headers-move">
+                    <h1 class="text-white text-2xl my-16 font-bold">Select a Payment Method To Proceed</h1>
+                </div>
+                <div class="flex items-center justify-around mr-30">
+                    <div class="logo-container mx-10" onclick="showMobileMoneyInputs()">
+                        <img class="w-60 h-40"
+                             src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/Airtel-and-MTN-Mobile-Money-Services.jpeg?alt=media&token=5a18fa5b-55cc-4ab4-a934-0b18ac9a2c6f"
+                             alt="Airtel and mtn mobile money logout">
+                    </div>
+                    <div class="logo-container mx-10">
+                        <img class="w-60 h-40"
+                             src="https://firebasestorage.googleapis.com/v0/b/twinbrook-42051.appspot.com/o/banktransfer.png?alt=media&token=5ba538df-2b84-4307-a0b9-d0176fd79d78"
+                             alt="Airtel and mtn mobile money logout">
+                    </div>
+                </div>
+                <div id="mobileMoneyInputs" class="inputs-container w-4/12">
+                    <div>
+                        <div cass="form-control">
+                            <span class="my-3 text-white my-2">Enter Mobile money number</span>
+                            <br />
+                            <label class="input-group">
+                                <input type="text"
+                                       name="phone"
+                                       placeholder="0.01"
+                                       class="input input-bordered w-full" />
+                                <span class="px-5">🇺🇬</span>
+                            </label>
+                        </div>
+                        <div class="form-control w-full my-2">
+                            <h3 class="text-white my-3">Enter amount</h3>
+                            <label class="input-group w-full">
+                                <input type="text"
+                                       name="amount"
+                                       placeholder="0.01"
+                                       class="input w-full input-bordered" />
+                                <span>UGX</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="w-4/12 bg-slate-500">
+                    <span class="my-3 text-white bg-slate-600 px-10 py-4 rounded-3xl flex justify-center items-center my-5 w-full submit-btn">Continue</span>
+                </button>
+            </form>
+            <br>
+            <br>
+            <div id="closemm"
+                 class="flex items-center justify-between top-0 bg-slate-800 px-10 rounded-xl py-2">
+                <i class="fa-solid fa-xmark text-white text-xl mx-2"></i>
+                <h4 class="text-white">Close</h4>
+            </div>
+        </div>
+        <!-- This is where the withdraw form ends -->
+
         {% if not request.user.is_staff %}
             <div class='flex flex-col items-center justify-around'>
                 <div class="flex w-full px-16 items-center justify-around justify-between ">
@@ -215,28 +424,29 @@
                             <div class="stat-title text-white">Savings Balance</div>
                             <div class="stat-value text-white">UGX {{ account.accountBalance }}</div>
                             <div class="stat-actions">
-                                <button class="btn btn-sm mx-1 widthraw-btn">withdraw</button>
-                                <button class="btn btn-sm mx-1">Deposit</button>
+                                <a class="btn btn-sm mx-1" href="{% url 'withdraw' %}">withdraw</a>
+                                <a class="btn btn-sm mx-1 widthraw-btn" href="{% url 'deposit' %}" data-id="deposit">Deposit</a>
                             </div>
                         </div>
                         <div class="stat">
-                            <div class="stat-title text-white">Total Savings</div>
-                            <div class="stat-value text-white">UGX {{ loantotal.loanAmount__sum }}</div>
-                            <div class="stat-actions"></div>
+                            <div class="stat-title text-white">Total Active Loan Balance</div>
+                            <div class="stat-value text-white">UGX {{ activeloan.loanAmount }}</div>
+                            <div class="stat-actions">
+                                <button class="btn btn-sm mx-1 widthraw-btn" data-id="loan">Pay Loan</button>
+                            </div>
                         </div>
                     </div>
                     <div class="flex bg-slate-700 text-primary-content w-full  rounded-lg">
-                        <div class="stat">
+                        <div class="stat mx-1">
                             <div class="stat-title text-white">Total loan disbursed</div>
                             <div class="stat-value text-white">UGX 400,000</div>
                             <div class="stat-actions">
-                                <button class="btn btn-sm mx-1">withdraw</button>
+                                <a href="{% url 'loanapplication' %}" class="btn btn-sm mx-1">Loan Application</a>
                             </div>
                         </div>
                         <div class="stat">
                             <div class="stat-title text-white">Account Names</div>
                             <div class="stat-value text-white">{{ account.accountName }}</div>
-                            <div class="stat-actions"></div>
                         </div>
                     </div>
                 </div>
@@ -259,27 +469,10 @@
             </div>
         </div>
     </div>
+
+
     <script>
-  const withdraw=document.querySelector(".widthraw-btn")
-  console.log(withdraw)
-  const popup = document.querySelector(".payment-div")
-  withdraw.addEventListener('click',()=>{
-    popup.classList.toggle('show')
-  })
-
-  
-function showMobileMoneyInputs() {
-    var mobileMoneyInputs = document.getElementById('mobileMoneyInputs');
-    var title = document.querySelector('.headers-move');
-    title.classList.toggle('show');
-    mobileMoneyInputs.classList.toggle('show');
-    var logosContainer = document.querySelector('.flex.items-center.justify-around.mr-30');
-    logosContainer.classList.toggle('show-logos');
-    const submit = document.querySelector(".submit-btn")
-    submit.classList.toggle("show")
-}
-
-
+ 
     const ctx = document.getElementById('myChart');
     const myChart =document.getElementById('loanChart').getContext('2d');
   
@@ -289,7 +482,12 @@ function showMobileMoneyInputs() {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         datasets: [{
           label: 'Monthly Savings',
-          data: [120000, 190000, 30000, 500000, 20000, 0,0,0,0,0,0,0],
+          data: [{{monthly_totals.January}},
+           {{monthly_totals.February}},
+            {{monthly_totals.March}}, 
+            {{monthly_totals.April}}, 
+            {{monthly_totals.May}}, {{monthly_totals.June}},{{monthly_totals.July}},{{monthly_totals.August}},{{monthly_totals.September}},{{monthly_totals.October}},
+            {{monthly_totals.November}},{{monthly_totals.December}}],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)', // Red
             'rgba(54, 162, 235, 0.2)', // Blue
@@ -336,7 +534,12 @@ function showMobileMoneyInputs() {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         datasets: [{
           label: 'Monthly Savings',
-          data: [120000, 190000, 30000, 500000, 20000, 0,0,0,0,0,0,0],
+          data: [{{monthly_withdraws.January}},
+           {{monthly_withdraws.February}},
+            {{monthly_withdraws.March}}, 
+            {{monthly_withdraws.April}}, 
+            {{monthly_withdraws.May}}, {{monthly_withdraws.June}},{{monthly_withdraws.July}},{{monthly_withdraws.August}},{{monthly_withdraws.September}},{{monthly_withdraws.October}},
+            {{monthly_withdraws.November}},{{monthly_withdraws.December}}],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)', // Red
             'rgba(54, 162, 235, 0.2)', // Blue

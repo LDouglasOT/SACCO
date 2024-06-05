@@ -15,6 +15,8 @@
         <a href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css"
            rel="stylesheet"
            type="text/css" />
+        <link rel="stylesheet" href="datepicker.material.css">
+        <script src="datepicker.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css"
               rel="stylesheet"
@@ -43,6 +45,9 @@
                             <a href="{% url 'dashboard' %}">
                                 <h2 class='text-white text-xl flex items-center flex justify-start'>
                                     <i class="fa-solid fa-chart-line mx-3"></i> Dashboard
+                                    {% if paymentRequests %}
+                                    <div class="badge badge-primary badge-lg">{{paymentRequests}}</div>
+                                    {% endif %}
                                 </h2>
                             </a>
                         </li>
@@ -51,7 +56,7 @@
                             <li class='my-1'>
                                 <div class="cursor-pointer" onclick="toggleSection('members')">
                                     <h2 class='text-white text-xl flex items-center flex justify-start'>
-                                        <i class="fa-solid fa-users-line mx-3"></i>Members
+                                        <i class="fa-solid fa-users-line mx-3"></i>Clients
                                     </h2>
                                 </div>
                                 <ul class="pl-2 py-1 hidden animate-fade-in text-white ml-10"
@@ -72,20 +77,10 @@
                         <li class='my-1'>
                             <div onclick="toggleSection('loans')">
                                 <h2 class='text-white text-xl cursor-pointer flex items-center flex justify-start'>
-                                    <i class="fa-solid fa-plane-arrival mx-3"></i>Loans
+                                    <i class="fa-solid fa-coins mx-3"></i>
+                                    <a href="{% url 'loans' %}" class="text-slate-200">Loans</a>
                                 </h2>
                             </div>
-                            <ul class="pl-2 py-1 hidden animate-fade-in text-white ml-10" id="loans">
-                                <li class="text-white text-lg cursor-pointer">
-                                    <a href="{% url 'loans' %}" class="text-slate-200">Active</a>
-                                </li>
-                                <li class="text-white text-lg cursor-pointer">
-                                    <a href="{% url 'pendingLoans' %}" class="text-slate-200">Approval</a>
-                                </li>
-                                <li class="text-white text-lg cursor-pointer">
-                                    <a href="{% url 'disburse' %}" class="text-slate-200">Disbursement</a>
-                                </li>
-                            </ul>
                         </li>
                         <br />
                         <li class='my-1'>
@@ -103,29 +98,28 @@
                                 </h2>
                             </a>
                         </li>
-                        <br />
-                        <li class='my-1'>
-                            <a href="{% url 'transactions' %}">
-                                <h2 class='text-white text-xl flex items-center flex justify-start'>
-                                    <i class="fa-solid fa-money-bill-transfer mx-3"></i>Withdrawals
-                                </h2>
-                            </a>
-                        </li>
-                        <br />
-                        <li class='my-1'>
-                            <a href="{% url 'transactions' %}">
-                                <h2 class='text-white text-xl flex items-center flex justify-start'>
-                                    <i class="fa-solid fa-money-bill-wave mx-3"></i>Repayments
-                                </h2>
-                            </a>
-                        </li>
                         <br>
                         <li class='my-1'>
-                            <a href="{% url 'transactions' %}">
+                            <div class="cursor-pointer" onclick="toggleSection('accounting')">
                                 <h2 class='text-white text-xl flex items-center flex justify-start'>
-                                    <i class="fa-solid fa-calculator mx-3"></i>Accounting
+                                    <i class="fa-solid fa-users-line mx-3"></i>Accounting
                                 </h2>
-                            </a>
+                            </div>
+                            <ul class="pl-2 py-1 hidden animate-fade-in text-white ml-10"
+                                id="accounting">
+                                <li class="text-white text-lg cursor-pointer">
+                                    <a href="#" class="text-slate-200 text-sm">Accounting</a>
+                                </li>
+                                <li class="text-white text-lg cursor-pointer">
+                                    <a href="#" class="text-slate-200 text-sm">Transaction Accounts</a>
+                                </li>
+                                <li class="text-white text-lg cursor-pointer">
+                                    <a href="#" class="text-slate-200 text-sm">Cash Transfers</a>
+                                </li>
+                                <li class="text-white text-lg cursor-pointer">
+                                    <a href="#" class="text-slate-200 text-sm">Staff Till Sheet</a>
+                                </li>
+                            </ul>
                         </li>
                         <br>
                         <li class='my-1'>

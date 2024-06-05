@@ -1,0 +1,38 @@
+{% extends "home/dashboard.html" %}
+{% block dashboard %}
+<div class="bg-slate-800 w-full flex items-center justify-start flex-col  w-7/12 h-screen">
+    <br>
+    <br>
+    <div class="w-7/12 h-20">
+    </div>
+    <div class="w-full h-screen bg-slate-800 flex justify-center">
+        <div class="w-4/12 mx-10 my-16 rounded-xl bg-slate-700 p-6 flex flex-col items-center">
+            <img class="rounded-full h-40 w-40" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <br>
+            <h4 class="text-lg text-white">Douglas Luzinda</h4>
+            <br>
+            <h4 class="my-10 round-3xl bg-slate-200 rounded-2xl px-3 px-2 text-black my-5">Member</h4>
+            <button class="btn btn-success my-10">View Client Details</button>
+        </div>
+        <div class="w-7/12 bg-slate-700 my-16 rounded-xl p-6 grid grid-cols-2 gap-1">
+            <h4 class="text-white font-bold">Loan ID.: {{loan.id}}</h4>
+
+            <h4 class="text-white font-bold">Loan No.: {{loan.loanId}}</h4>
+            <h4 class="text-white font-bold">Principal : </h4>
+            <h4 class="text-white font-bold">Penalty Balance :</h4>
+            <h4 class="text-white font-bold">Interest Balance :</h4>
+            <h4 class="text-white font-bold">Total Paid :</h4>
+            <h4 class="text-white font-bold">Disbursement Date :</h4>
+            <h4 class="text-white font-bold">Due Date :</h4>
+            <h4 class="text-white font-bold">Loan Officer :</h4>
+            <h4 class="text-white font-bold">Referral Officer :</h4>
+            <h4 class="text-white font-bold">Application Date :</h4>
+            <h4 class="text-white font-bold">Interest :</h4>
+            <h4 class="text-white font-bold">Principle Balance :</h4>
+            <h4 class="text-white font-bold">Total Amount :</h4>
+            <h4 class="text-white font-bold">Outstanding Balance :</h4>
+            <h4 class="text-white font-bold">Approved Duration :</h4>
+        </div>
+    </div>
+</div>
+{% endblock %}

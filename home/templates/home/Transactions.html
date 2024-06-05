@@ -58,7 +58,13 @@
                             <td>{{ transaction.transactionType }}</td>
                             <td>UGX {{ transaction.transactionAmount }}</td>
                             <td>
-                                <div class="badge badge-success gap-2">success</div>
+                                {% if transaction.transactionStatus == 'pending' %}
+                                    <div class="badge badge-warning gap-2">pending</div>
+                                {% elif transaction.transactionStatus == 'failed' %}
+                                    <div class="badge badge-danger gap-2">failed</div>
+                                {% else %}
+                                    <div class="badge badge-success gap-2">success</div>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

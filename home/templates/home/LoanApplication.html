@@ -1,6 +1,6 @@
 {% extends "home/dashboard.html" %}
 {% block dashboard %}
-    <div class="bg-slate-800 w-full flex items-center justify-start flex-col h-screen px-30 w-9/12">
+    <div class="bg-slate-800 w-full flex items-center justify-start flex-col px-30 w-9/12">
         <h3 class="text-white font-bold text-3xl my-20 underline">LOAN APPLICATION DETAILS</h3>
         <div class="w-8/12 bg-slate-700 rounded-lg p-6 h-8/12 flex justify-center flex-col">
             <h3 class="text-white font-bold text-2xl my-5 mx-auto">Fill in the details below</h3>
@@ -12,14 +12,40 @@
                         <input type="text"
                                placeholder="FullNames"
                                class="input input-bordered rounded w-full max-w-xs" />
+                        <select id="payment-frequency" class="w-8/12 bg-white rounded-3xl mx-5 p-3" name="cars">
+                            <option value="" disabled selected>Select Payment Frequency</option>
+                            <option value="yearly">Yearly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="daily">Daily</option>
+                        </select>
                         <input type="text"
-                               placeholder="Expected repayment date"
-                               class="input input-bordered rounded w-full max-w-xs" />
-                        <input type="text"
-                               placeholder="Expected repayment date"
+                               id="number-of-units"
+                               placeholder="Number of days, month, or year"
                                class="input input-bordered rounded w-full max-w-xs" />
                     </div>
                     <br>
+                    <div class="flex justify-between items-center">
+                        <select id="payment-frequency" class="w-full bg-white rounded-3xl mx-5 p-3" name="cars">
+                            <option value="" disabled selected>Select Disbursement Type</option>
+                            <option value="yearly">To Bank Account</option>
+                            <option value="monthly">To Mobile Money Account</option>
+                            <option value="daily">To Sacco Account</option>
+                            <option value="daily">Cash at Hand</option>
+                        </select>
+                    <input type="text"
+                               placeholder="Account Number"
+                               class="input input-bordered rounded w-full" />    
+                    <input type="number"
+                    placeholder="Account Names"
+                    class="input input-bordered rounded w-full" />
+
+                    </div>
+                    <br>
+                    <input type="number"
+                           id="loan-amount"
+                           placeholder="Loan Amount"
+                           class="input input-bordered rounded w-full" />
+                    <br/>
                     <textarea class="textarea" placeholder="Reason for the Loan"></textarea>
                 </div>
                 <br>
@@ -27,6 +53,104 @@
                     <button type="submit" class="bg-green-900 rounded-2xl text-white w-full my-5">APPLY</button>
                 </div>
             </form>
+            <div class="w-8/12 bg-slate-600 rounded-lg p-6 mt-6" id="payment-table-container">
+                <!-- This is where the table will be inserted -->
+            </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const paymentFrequencyElement = document.getElementById('payment-frequency');
+            const numberOfUnitsElement = document.getElementById('number-of-units');
+            const loanAmountElement = document.getElementById('loan-amount');
+            const paymentTableContainer = document.getElementById('payment-table-container');
+
+            function calculatePayments() {
+                const frequency = paymentFrequencyElement.value;
+                const numberOfUnits = parseInt(numberOfUnitsElement.value);
+                const loanAmount = parseFloat(loanAmountElement.value);
+
+                if (!frequency || isNaN(numberOfUnits) || isNaN(loanAmount)) {
+                    return;
+                }
+
+                let periodLabel, periodDays;
+                switch(frequency) {
+                    case 'yearly':
+                        periodLabel = 'Year';
+                        periodDays = 365;
+                        break;
+                    case 'monthly':
+                        periodLabel = 'Month';
+                        periodDays = 30;
+                        break;
+                    case 'daily':
+                        periodLabel = 'Day';
+                        periodDays = 1;
+                        break;
+                    default:
+                        return;
+                }
+
+                // Calculate total loan amount with interest
+                const totalLoanAmount = loanAmount * Math.pow((1 + 0.12), (numberOfUnits * periodDays / 365));
+                const totalInterest = totalLoanAmount - loanAmount;
+                
+                // Split the total amount into slightly varying payments
+                let payments = [];
+                let remainingAmount = totalLoanAmount;
+                for (let i = 1; i <= numberOfUnits; i++) {
+                    let payment = (remainingAmount / (numberOfUnits - i + 1)) * (0.95 + 0.1 * Math.random());
+                    payments.push(payment.toFixed(2));
+                    remainingAmount -= payment;
+                }
+
+                // Ensure the total payments match the total loan amount
+                let sumPayments = payments.reduce((acc, payment) => acc + parseFloat(payment), 0);
+                let correction = totalLoanAmount - sumPayments;
+                payments[payments.length - 1] = (parseFloat(payments[payments.length - 1]) + correction).toFixed(2);
+
+                // Create the table
+                let tableHTML = `
+                    <table class="table-auto w-full text-white">
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                for (let i = 1; i <= numberOfUnits; i++) {
+                    tableHTML += `
+                        <tr>
+                            <td>${periodLabel} ${i}</td>
+                            <td>${payments[i - 1]}</td>
+                        </tr>
+                    `;
+                }
+
+                tableHTML += `
+                        <tr style="color: yellow; font-weight: bold;">
+                            <td>Total Amount with Interest</td>
+                            <td>${totalLoanAmount.toFixed(2)}</td>
+                        </tr>
+                        <tr style="color: red; font-weight: bold;">
+                            <td>Total Interest</td>
+                            <td>${totalInterest.toFixed(2)}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                `;
+
+                paymentTableContainer.innerHTML = tableHTML;
+            }
+
+            paymentFrequencyElement.addEventListener('change', calculatePayments);
+            numberOfUnitsElement.addEventListener('input', calculatePayments);
+            loanAmountElement.addEventListener('input', calculatePayments);
+        });
+    </script>
 {% endblock %}

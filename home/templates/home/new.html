@@ -23,7 +23,7 @@
                            required>
                 </p>
                 <p>
-                    <label for="id_location">Location:</label>
+                    <label for="id_location">Place of residence:</label>
                     <input type="text"
                            name="location"
                            id="id_location"
@@ -59,36 +59,28 @@
                            required>
                 </p>
                 <p>
-                    <label for="id_membershipNumber">Membership Number:</label>
-                    <input type="text"
-                           name="membershipNumber"
-                           id="id_membershipNumber"
-                           placeholder="Enter Membership Number">
-                </p>
-                <p>
-                    <label for="id_membershipType">Membership Type:</label>
-                    <input type="text"
-                           name="membershipType"
-                           id="id_membershipType"
-                           placeholder="Enter Membership Type">
-                </p>
-                <p>
-                    <label for="id_HomeAddress">Home Address:</label>
-                    <input type="text"
-                           name="HomeAddress"
-                           id="id_HomeAddress"
-                           placeholder="Enter Home Address">
+                    <label for="id_Role">Member Type:</label>
+                    <select name="id_Role" id="id_Role" required>
+                        <option value="" disabled selected>Select Role</option>
+                        <option value="admin">Administrator</option>
+                        <option value="normal">Normal User</option>
+                    </select>
                 </p>
                 <p>
                     <label for="id_dateofbirth">Date of Birth:</label>
-                    <input type="date" min="2010-01-01 name="birthday" id="id_birthday" required>
+                    <input type="date"
+                           min="2010-01-01"
+                           name="birthday"
+                           id="id_birthday"
+                           required>
                 </p>
                 <p>
-                    <label for="id_nationality">Nationality:</label>
-                    <input type="text"
-                           name="nationality"
-                           id="id_nationality"
-                           placeholder="Enter Nationality">
+                    <label for="id_MaritalStatus">Nationality</label>
+                    <select name="accountType" id="id_nationality" required>
+                        <option value="" disabled selected>Select Nationality</option>
+                        <option value="Savings">Ugandan</option>
+                        <option value="Checking">Others</option>
+                    </select>
                 </p>
                 <p>
                     <label for="id_nationalId">National ID:</label>
@@ -98,42 +90,35 @@
                            placeholder="Enter National ID">
                 </p>
                 <p>
-                    <label for="id_placeofwork">Place of Work:</label>
+                    <label for="id_placeofwork">Boda stage:</label>
                     <input type="text"
                            name="placeofwork"
                            id="id_placeofwork"
-                           placeholder="Enter Place of Work">
+                           placeholder="Boda stage">
                 </p>
                 <p>
-                    <label for="id_natureofwork">Nature of Work:</label>
+                    <label for="id_natureofwork">stage leader:</label>
                     <input type="text"
                            name="natureofwork"
                            id="id_natureofwork"
-                           placeholder="Enter Nature of Work">
+                           placeholder="stage leader">
                 </p>
                 <p>
-                    <label for="id_gender">Account Type:</label>
+                    <label for="id_gender">Gender:</label>
                     <select name="accountType" id="id_gender" required>
                         <option value="" disabled selected>Select Gender</option>
-                        <option value="Savings">Male</option>
-                        <option value="Checking">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                     </select>
                 </p>
                 <p>
-                    <label for="id_MaritalStatus">Account Type:</label>
-                    <select name="accountType" id="id_MaritalStatus" required>
-                        <option value="" disabled selected>Select Gender</option>
-                        <option value="Savings">Single</option>
-                        <option value="Checking">Married</option>
-                        <option value="Checking">Prefer not to say</option>
+                    <label for="id_MaritalStatus">Maritual status:</label>
+                    <select name="id_MaritalStatus" id="id_MaritalStatus" required>
+                        <option value="" disabled selected>Select Maritual status</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="not_say">Prefer not to say</option>
                     </select>
-                </p>
-                <p>
-                    <label for="id_MaritalStatus">Marital Status:</label>
-                    <input type="text"
-                           name="MaritalStatus"
-                           id="id_MaritalStatus"
-                           placeholder="Enter Marital Status">
                 </p>
                 <p>
                     <label for="id_nextofkin">Next of Kin:</label>
@@ -156,9 +141,6 @@
                            id="id_nextofkinaddress"
                            placeholder="Enter Next of Kin Address">
                 </p>
-            </div>
-            <h1 class="font-bold text-white text-xl my-10">New User Account Details</h1>
-            <div class="flex flex-wrap bg-gray-800">
                 <p>
                     <label for="id_accountBalance">Account Balance:</label>
                     <input type="number"
@@ -168,50 +150,11 @@
                            required>
                 </p>
                 <p>
-                    <label for="id_accountType">Account Type:</label>
-                    <select name="accountType" id="id_accountType" required>
-                        <option value="" disabled selected>Select Account Type</option>
-                        <option value="Savings">Savings</option>
-                        <option value="Checking">Checking</option>
-                        <option value="Investment">Investment</option>
-                        <!-- Add more account type options as needed -->
-                    </select>
-                </p>
-                <p>
-                    <label for="id_accountOwner">Account Owner:</label>
-                    <input type="text"
-                           name="accountOwner"
-                           id="id_accountOwner"
-                           placeholder="Enter Account Owner"
-                           required>
-                </p>
-                <p>
-                    <label for="id_interest">Interest:</label>
-                    <input type="number"
-                           name="interest"
-                           id="id_interest"
-                           placeholder="Enter Interest"
-                           required>
-                </p>
-                <p>
-                    <label for="id_nextofkinAccount">Next of Kin (Account):</label>
-                    <input type="text"
-                           name="nextofkinAccount"
-                           id="id_nextofkinAccount"
-                           placeholder="Enter Next of Kin (Account)"
-                           required>
-                </p>
-                <p>
                     <label for="id_approvedBy">Approved By:</label>
-                    <input type="text"
-                           name="approvedBy"
-                           id="id_approvedBy"
-                           placeholder="Enter Approved By"
-                           required>
-                </p>
-                <p>
-                    <label for="id_isActive">Active:</label>
-                    <input type="checkbox" name="isActive" id="id_isActive" checked>
+                    <select name="id_approvedBy" id="id_approvedBy" required>
+                        <option value="" disabled selected>Select User</option>
+                        {% for member in members %}<option value="{{ member.username }}">{{ member.username }}</option>{% endfor %}
+                    </select>
                 </p>
             </div>
             <br>
@@ -224,6 +167,35 @@
             <br>
         </form>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Function to handle form submission
+            function handleSubmit(event) {
+                event.preventDefault(); // Prevent default form submission
+                // You can perform additional validation here if needed
+                // Fetch the form data
+                const formData = new FormData(document.getElementById('userForm'));
+                console.log(formData)
+                // Construct the request
+                fetch('/your-submit-url/', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    window.location.href = '/success-page/';
+                })
+                .catch(error => {
+                    console.error('There was an error with the form submission:', error);
+                    // Handle errors, display an error message, etc.
+                });
+            }
+            // Add event listener to the form submission event
+            document.getElementById('userForm').addEventListener('submit', handleSubmit);
+        });
+    </script>
     <style>
         p {
             display: flex;

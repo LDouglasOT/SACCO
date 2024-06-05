@@ -1,0 +1,51 @@
+{% extends "home/dashboard.html" %}
+{% block dashboard %}
+<div class="flex flex-col items-center justify-center bg-slate-700 w-full h-screen top-0 z-10">
+    <form action="{% url 'deposit' %}"
+          method="post"
+          class="w-full flex items-center justify-center flex-col">
+        {% csrf_token %}
+        <div class="headers-move">
+            <h1 class="text-white text-2xl my-16 font-bold">Select a Payment Method To Deposit Money</h1>
+        </div>
+        <div class="flex items-center justify-around mr-30">
+         
+        </div>
+        <br>
+        <div id="mobileMoneyInputs" class="inputs-container w-4/12">
+            <div>
+                <br/>
+                <br/>
+                <div cass="form-control">
+                    <span class="my-3 text-white my-2">Enter Mobile Money Number</span>
+                    <br />
+
+                    <label class="input-group">
+                        <input type="text"
+                               name="phone"
+                               required
+                               placeholder="0.01"
+                               class="input input-bordered w-full" />
+                        <span class="px-5">🇺🇬</span>
+                    </label>
+                </div>
+                <div class="form-control w-full my-2">
+                    <h3 class="text-white my-3">Enter amount</h3>
+                    <label class="input-group w-full">
+                        <input type="text"
+                               name="amount"
+                               placeholder="0.01" 
+                               required
+                               class="input w-full input-bordered" />
+                        <span>UGX</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="w-4/12 bg-slate-500">
+            <span class="my-3 text-white bg-slate-600 px-10 py-4 rounded-3xl flex justify-center items-center my-5 w-full submit-btn">Continue</span>
+        </button>
+    </form>
+    <br>
+</div>
+{% endblock %}

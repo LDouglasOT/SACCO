@@ -25,20 +25,22 @@ from django.http import HttpResponse
 
 def ActiveLoans(request):
     if request.user.is_staff:
-        loan = Loan.objects.filter(loanStatus="Active")
+        loan = Loan.objects.filter()
+
         return render(
             request,
             "home/Loans/Loans.html",
             {"footer": False, "header": False, "loans": loan},
         )
     loan = Loan.objects.filter(
-        loanOwner=request.user, isActive=True, loanStatus="Approved"
+        loanOwner=request.user, loanStatus="Approved"
     )
     return render(
         request,
         "home/Loans/Loans.html",
-        {"footer": False, "header": False, "loans": loan},
+        {"footer": False, "header": False, "loans": loan,"loancounter":loan.count()},
     )
+
 
 
 def declinedLoans(request):

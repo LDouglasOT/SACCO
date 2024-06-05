@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django_tables2",
     "django.contrib.humanize",
     "django_browser_reload",
+    "payments",
 ]
 
 MIDDLEWARE = [

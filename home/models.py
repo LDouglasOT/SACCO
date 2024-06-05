@@ -138,6 +138,8 @@ class Transaction(models.Model):
     transactionType = models.CharField(max_length=255)
     transactionAmount = models.FloatField()
     transactionDate = models.DateTimeField(auto_now_add=True)
+    transactionDescription = models.CharField(max_length=255,default="none")
+    transactionStatus = models.CharField(max_length=255, default="pending")
     transactionOwner = models.ForeignKey(
         "CustomUser", related_name="transactions", on_delete=models.CASCADE
     )
@@ -175,6 +177,14 @@ class Loan(models.Model):
     loanDuration = models.IntegerField()
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
+    disbursement = models.DateField(null=True, blank=True)
+    totalPaid = models.FloatField(default=0)
+    duedate = models.DateField(null=True, blank=True)
+    Referral =models.ForeignKey('CustomUser',related_name='referral',on_delete=models.CASCADE,null=True,blank=True)
+    outstanding = models.FloatField(default=0)
+    approvedBy = models.CharField(max_length=255,null=True,blank=True)
+    isActive = models.BooleanField(default=True)
+    PenaltyBalannce = models.FloatField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.loanId:
